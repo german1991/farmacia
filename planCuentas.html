@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Plan de Cuentas</title>
+
+  <style>
+  /* styles.css - simple, clean layout */
+  :root{
+    --bg:#f6f7fb; --card:#fff; --accent:#0ea5a1; --muted:#6b7280;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Inter, system-ui, Arial, sans-serif;margin:0;background:var(--bg);color:#111}
+  .header{background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,0.06);display:flex;align-items:center;gap:16px;padding:12px 20px;position:sticky;top:0;z-index:10}
+  .brand{font-weight:700;font-size:18px;color:var(--accent)}
+  .nav{display:flex;gap:8px;margin-left:auto}
+  .nav a{padding:8px 10px;border-radius:6px;text-decoration:none;color:#111}
+  .nav a:hover{background:#eef2f2}
+  .container{max-width:1100px;margin:28px auto;padding:18px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 1px 2px rgba(16,24,40,0.03)}
+  .small{font-size:13px;color:var(--muted)}
+  .table-wrapper{overflow-x:auto}
+  .table{width:100%;border-collapse:collapse}
+  .table th,.table td{padding:10px 8px;text-align:left;border-bottom:1px solid #f0f0f0}
+  .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid #e6f6f6}
+  .form-row{display:flex;gap:8px;margin-bottom:8px}
+  .input, textarea, select{padding:8px;border-radius:6px;border:1px solid #e6e6e6;flex:1}
+  .header-actions{display:flex;gap:8px;align-items:center}
+  .footer{margin-top:24px;color:var(--muted);font-size:13px;text-align:center}
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr}
+    .nav{display:none}
+  }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="brand">ALTA PLAN DE CUENTAS</div>
+    <nav class="nav" aria-label="principal">
+      <a href="#">Inicio</a>
+      <a href="#">Cuentas</a>
+      <a href="#">Reportes</a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="addRow" class="btn">Agregar fila</button>
+      <button id="exportJson" class="btn ghost">Exportar JSON</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <div class="card" style="grid-column: 1 / -1;">
+        <div class="small">Tabla: <strong>PLAN DE CUENTAS</strong></div>
+
+        <div class="table-wrapper">
+          <table class="table" id="planTable" aria-label="Plan de cuentas">
+            <thead>
+              <tr>
+                <th>Cuenta</th>
+                <th>Tipo de cuenta (Gasto / Ingreso)</th>
+                <th>Ingreso</th>
+                <th>Egreso</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- fila ejemplo / editable -->
+              <tr>
+                <td><input class="input" type="text" name="cuenta" placeholder="Nombre de la cuenta (Ej: Ventas)"></td>
+                <td>
+                  <select class="input" name="tipoCuenta" aria-label="Tipo de cuenta">
+                    <option value="">Seleccionar...</option>
+                    <option value="ingreso">Ingreso</option>
+                    <option value="gasto">Gasto</option>
+                  </select>
+                </td>
+                <td><input class="input" type="number" name="ingreso" step="0.01" placeholder="0.00"></td>
+                <td><input class="input" type="number" name="egreso" step="0.01" placeholder="0.00"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
+          <button id="removeLast" class="btn ghost">Eliminar última fila</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"></div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const addBtn = document.getElementById('addRow');
+      const removeBtn = document.getElementById('removeLast');
+      const exportBtn = document.getElementById('exportJson');
+      const tbody = document.getElementById('planTable').querySelector('tbody');
+
+      addBtn.addEventListener('click', () => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input class="input" type="text" name="cuenta" placeholder="Nombre de la cuenta (Ej: Compras)"></td>
+          <td>
+            <select class="input" name="tipoCuenta" aria-label="Tipo de cuenta">
+              <option value="">Seleccionar...</option>
+              <option value="ingreso">Ingreso</option>
+              <option value="gasto">Gasto</option>
+            </select>
+          </td>
+          <td><input class="input" type="number" name="ingreso" step="0.01" placeholder="0.00"></td>
+          <td><input class="input" type="number" name="egreso" step="0.01" placeholder="0.00"></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      removeBtn.addEventListener('click', () => {
+        if (tbody.rows.length > 0) tbody.removeChild(tbody.lastElementChild);
+      });
+
+      exportBtn.addEventListener('click', () => {
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        const data = rows.map(r => {
+          const cuentaEl = r.querySelector('input[name="cuenta"]');
+          const tipoEl = r.querySelector('select[name="tipoCuenta"]');
+          const ingresoEl = r.querySelector('input[name="ingreso"]');
+          const egresoEl = r.querySelector('input[name="egreso"]');
+
+          const cuenta = cuentaEl ? cuentaEl.value : '';
+          const tipo = tipoEl ? tipoEl.value : '';
+          const ingreso = ingresoEl ? ingresoEl.value : '';
+          const egreso = egresoEl ? egresoEl.value : '';
+
+          return { cuenta, tipoCuenta: tipo, ingreso: ingreso || '0', egreso: egreso || '0' };
+        });
+
+        const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'plan_de_cuentas.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      });
+    });
+  </script>
+
+</body>
+</html>

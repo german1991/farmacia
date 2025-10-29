@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Envíos - Farmacia</title>
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+
+<div class="header">
+  <div class="brand">Farmacia - Demo</div>
+  <div class="header-actions small">Usuario: Demo</div>
+  <div class="nav">
+    <a href="index.html">Dashboard</a>
+    <a href="ingreso.html">Ingreso Pedidos</a>
+    <a href="salidaPedidos.html">Salida Pedidos</a>
+    <a href="envios.html">Envíos</a>
+    <a href="arqueo.html">Arqueo Caja</a>
+    <a href="planCuentas.html">Plan Cuentas</a>
+    <a href="cuentas.html">Cuentas Corrientes</a>
+    <a href="reportes.html">Reportes</a>
+    <a href="canales.html">canales</a>
+  </div>
+</div>
+
+<main class="container">
+  <div class="card">
+    <h3>Envíos</h3>
+    <div id="envios-list"></div>
+  </div>
+
+  <div style="margin-top:16px" class="card">
+    <h3>Crear envío manual</h3>
+    <form id="form-envio">
+      <div class="form-row">
+        <input class="input" name="pedidoId" placeholder="Fecha">
+        <input class="input" name="transportista" placeholder="Nro operacion">
+        
+      </div>
+      <div>
+        <button class="btn" type="submit">Marcar Enviado</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="footer">Envíos</div>
+</main>
+
+<script src="app.js"></script>
+<script>
+  seedSampleData();
+  renderPedidosTable('#envios-list',{status:'Procesado', showActions:true, allowShip:true});
+  // handle envio form
+  const f = document.getElementById('form-envio');
+  f.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const id = f.pedidoId.value.trim();
+    if(!id){ alert('Ingrese ID'); return; }
+    if(updatePedidoStatus(id,'Enviado')){ alert('Pedido marcado como Enviado'); location.reload(); }
+    else alert('Pedido no encontrado o no está en estado correcto');
+  });
+</script>
+</body>
+</html>

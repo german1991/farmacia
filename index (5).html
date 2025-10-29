@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard - Farmacia</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">Farmacia - Demo</div>
+  <div class="header-actions small">Usuario: Demo</div>
+  <div class="nav">
+    <a href="index (5).html">Dashboard</a>
+    <a href="ingreso.html">Ingreso Pedidos</a>
+    <a href="salidaPedidos.html">Salida Pedidos</a>
+    <a href="envios.html">Envíos</a>
+    <a href="arqueo.html">Arqueo Caja</a>
+    <a href="planCuentas.html">Plan Cuentas</a>
+    <a href="cuentas.html">Cuentas Corrientes</a>
+    <a href="reportes.html">Reportes</a>
+    <a href="canales.html">canales</a>
+  </div>
+</div>
+
+<main class="container">
+  <div class="grid">
+    <div class="card">
+      <h3>Resumen</h3>
+      <div class="small">Total pedidos: <strong id="stat-total">0</strong></div>
+      <div class="small">Pendientes: <strong id="stat-pend">0</strong></div>
+      <div class="small">Procesados: <strong id="stat-proc">0</strong></div>
+      <div class="small">Enviados: <strong id="stat-env">0</strong></div>
+      <div style="margin-top:12px">
+        <a class="btn" href="ingreso.html">Crear Pedido</a>
+      </div>
+    </div>
+    
+
+  <div style="margin-top:18px" class="card">
+    <h3>Lista completa</h3>
+    <div id="lista-completa"></div>
+  </div>
+
+  <div class="footer"></div>
+</main>
+
+<script src="app.js"></script>
+<script>
+  seedSampleData();
+  renderDashboardStats();
+  renderPedidosTable('#lista-completa',{showActions:true});
+  renderPedidosTable('#ultimos',{});
+</script>
+</body>
+</html>

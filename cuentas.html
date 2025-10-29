@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cuentas Corrientes - Farmacia</title>
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+
+<div class="header">
+  <div class="brand">Farmacia - Demo</div>
+  <div class="header-actions small">Usuario: Demo</div>
+  <div class="nav">
+    <a href="index.html">Dashboard</a>
+    <a href="ingreso.html">Ingreso Pedidos</a>
+    <a href="salidaPedidos.html">Salida Pedidos</a>
+    <a href="envios.html">Envíos</a>
+    <a href="arqueo.html">Arqueo Caja</a>
+    <a href="planCuentas.html">Plan Cuentas</a>
+    <a href="cuentas.html">Cuentas Corrientes</a>
+    <a href="reportes.html">Reportes</a>
+    <a href="canales.html">canales</a>
+  </div>
+</div>
+
+<main class="container">
+  <div class="card">
+    <h3>Alta Cuenta corriente </h3>
+    
+
+    <form>
+      <div class="form-row">
+        <label class="small" for="estimacionMax">Nombre:</label>
+        <input type="text" id="estimacionMax" class="input" placeholder="">
+      </div>
+
+      <div class="form-row">
+        <label class="small" for="estimacionInflexion">Cuenta correspondiente:</label>
+        <input type="text" id="estimacionInflexion" class="input" placeholder="">
+      </div>
+
+      <div class="form-row">
+        <label class="small" for="tablaValores">Condicion:</label>
+        <textarea id="tablaValores" class="input" rows="4" placeholder=""></textarea>
+      </div>
+
+      <div class="form-row">
+        <label class="small" for="comentarios">Porcentaje:</label>
+        <textarea id="comentarios" class="input" rows="3" placeholder=""></textarea>
+      </div>
+
+      <div style="margin-top:12px">
+        <button type="submit" class="btn">Guardar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="footer"></div>
+</main>
+
+</body>
+</html>

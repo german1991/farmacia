@@ -1,65 +1,112 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ingreso Pedidos - Farmacia</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Bienvenida - Farmacia</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #fff;
+      --accent: #0ea5a1;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Inter, system-ui, Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: #111;
+    }
+    .header {
+      background: var(--card);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand { font-weight: 700; font-size: 18px; color: var(--accent); }
+    .nav { display: flex; gap: 8px; margin-left: auto; }
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #111;
+    }
+    .nav a:hover { background: #eef2f2; }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 18px;
+      text-align: center;
+    }
+    .card {
+      background: var(--card);
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.03);
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+    p {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .btn {
+      background: var(--accent);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .footer {
+      margin-top: 40px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="brand">Farmacia - Demo</div>
-  <div class="header-actions small">Usuario: Demo</div>
-  <div class="nav">
-    <a href="index.html">Inicio</a>
-    <a href="ingreso.html">Ingreso Pedidos</a>
-    <a href="salidaPedidos.html">Salida Pedidos</a>
-    <a href="envios.html">Envíos</a>
-    <a href="arqueo.html">Arqueo Caja</a>
-    <a href="planCuentas.html">Plan Cuentas</a>
-    <a href="cuentas.html">Cuentas</a>
-    <a href="reportes.html">Reportes</a>
-    <a href="canales.html">canales</a>
-  </div>
-</div>
+  <header class="header">
+    <div class="brand">Farmacia - Demo</div>
+    <div class="header-actions small">Usuario: Demo</div>
+    <div class="nav">
+      <a href="ingreso.html">Ingreso Pedidos</a>
+      <a href="salidaPedidos.html">Salida Pedidos</a>
+      <a href="envios.html">Envíos</a>
+      <a href="arqueo.html">Arqueo Caja</a>
+      <a href="planCuentas.html">Plan Cuentas</a>
+      <a href="cuentas.html">Cuentas</a>
+      <a href="reportes.html">Reportes</a>
+      <a href="canales.html">Canales</a>
+      <a href="altaClientes.html">Alta de clientes</a>
+      <a href="cuentaCorriente.html">Cuenta corriente</a>
+    </div>
+  </header>
 
-<main class="container">
-  <div class="card">
-    <h3>Crear nuevo pedido</h3>
-    <form id="form-ingreso">
-      <div class="form-row">
-        <input class="input" name="cliente" placeholder="Nombre del cliente">
-        <input class="input" name="items" placeholder="Items (ej: Ibuprofeno x1, Jarabe x1)">
-        <input class="input" name="items" placeholder="Nombre del paciente">
-        <input class="input" name="items" placeholder="Fecha">
-        <input class="input" name="items" placeholder="numero de operacion">
-        <input class="input" name="items" placeholder="Cuenta corriente">
-        <input class="input" name="items" placeholder="canales">
-        <input class="input" name="items" placeholder="envio">
-      </div>
-      <div style="margin-bottom:8px">
-        <textarea name="notas" rows="3" placeholder="Notas" style="width:100%;padding:8px;border-radius:6px;border:1px solid #e6e6e6"></textarea>
-      </div>
-      <div>
-        <button class="btn" type="submit">Guardar pedido</button>
-        <a class="btn ghost" href="index.html" style="margin-left:8px">Volver</a>
-      </div>
-    </form>
-  </div>
+  <main class="container">
+    <div class="card">
+      <h1>Bienvenido al sistema de gestión</h1>
+      <p>Desde aquí podés administrar pedidos, cuentas, envíos y más. Usá el menú superior para navegar por las secciones o comenzá directamente.</p>
+      <a class="btn" href="ingreso.html">Comenzar</a>
+    </div>
+    <div class="footer">Farmacia - Demo</div>
+  </main>
 
-  <div style="margin-top:16px" class="card">
-    <h3>Pedidos Pendientes</h3>
-    <div id="pendientes-list"></div>
-  </div>
-
-  <div class="footer">Ingreso de pedidos</div>
-</main>
-
-<script src="app.js"></script>
-<script>
-  seedSampleData();
-  handleIngresoForm('form-ingreso');
-  renderPedidosTable('#pendientes-list',{status:'Pendiente', showActions:true, allowProcess:true});
-</script>
 </body>
 </html>

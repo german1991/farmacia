@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cuentas corrientes</title>
+
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #fff;
+      --accent: #0ea5a1;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Inter, system-ui, Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: #111;
+    }
+    .header {
+      background: var(--card);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand { font-weight: 700; font-size: 18px; color: var(--accent); }
+    .nav { display: flex; gap: 8px; margin-left: auto; }
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #111;
+    }
+    .nav a:hover { background: #eef2f2; }
+    .container {
+      max-width: 800px;
+      margin: 28px auto;
+      padding: 18px;
+    }
+    .card {
+      background: var(--card);
+      padding: 16px;
+      border-radius: 10px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.03);
+    }
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .input, select {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #e6e6e6;
+      font-size: 14px;
+    }
+    .btn {
+      background: var(--accent);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    @media (max-width:900px) {
+      .nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="brand">Cuentas corrientes</div>
+    <nav class="nav">
+      <a href="index (5).html">Inicio</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h3>Cuentas corrientes</h3>
+      <form id="form-caso">
+
+        <div class="form-row">
+          <label class="small" for="nroOperacion">N° Operación:</label>
+          <input type="text" id="nroOperacion" class="input" placeholder="Ej: 12345">
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="fecha">Fecha:</label>
+          <input type="date" id="fecha" class="input">
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="ctaCte">CTA CTE:</label>
+          <input type="text" id="ctaCte" class="input" placeholder="Ej: Cuenta 001">
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="ingreso">Ingreso:</label>
+          <input type="number" id="ingreso" class="input" step="0.01" placeholder="0.00">
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="egreso">Egreso:</label>
+          <input type="number" id="egreso" class="input" step="0.01" placeholder="0.00">
+        </div>
+
+        <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+          <button type="submit" class="btn">Guardar caso</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="footer"></div>
+  </main>
+
+  <script>
+    document.getElementById('form-caso').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const operacion = document.getElementById('nroOperacion').value;
+      const fecha = document.getElementById('fecha').value;
+      const ctaCte = document.getElementById('ctaCte').value;
+      const ingreso = document.getElementById('ingreso').value || '0';
+      const egreso = document.getElementById('egreso').value || '0';
+
+      alert(`Guardado correctamente`);
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>

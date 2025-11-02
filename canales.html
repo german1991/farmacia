@@ -1,72 +1,207 @@
-<div style="margin-top:18px" class="card">
-  <h3>Ingreso de Componente</h3>
-  <form>
-    <div class="form-row">
-      <label class="small" for="tipoCanal">Tipo de canal:</label>
-      <select id="tipoCanal" class="input">
-        <option value="cobre">Cobro</option>
-        <option value="pungo">Pago</option>
-      </select>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title></title>
+
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #fff;
+      --accent: #0ea5a1;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Inter, system-ui, Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: #111;
+    }
+    .header {
+      background: var(--card);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand { font-weight: 700; font-size: 18px; color: var(--accent); }
+    .nav { display: flex; gap: 8px; margin-left: auto; }
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #111;
+    }
+    .nav a:hover { background: #eef2f2; }
+    .container {
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 18px;
+    }
+    .card {
+      background: var(--card);
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.03);
+    }
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .input, textarea, select {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #e6e6e6;
+      font-size: 14px;
+    }
+    textarea.input {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .btn {
+      background: var(--accent);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn.ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid #e6f6f6;
+    }
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    @media (max-width:900px) {
+      .nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="brand">Farmacia - Demo</div>
+    <nav class="nav">
+      
+      <a href="./salidaPedidos.html">Pedidos</a>
+      <a href="./index.html">Inicio</a>
+      <a href="./canales.html">canales</a>
+      
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="card" style="margin-top:18px">
+      <h3>Ingreso de Componente</h3>
+      <form id="form-componente">
+
+        <div class="form-row">
+          <label class="small" for="tipoCanal">Tipo de canal:</label>
+          <select id="tipoCanal" class="input">
+            <option value="cobre">Cobro</option>
+            <option value="pungo">Pago</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="dimension1">tc:</label>
+          <input type="number" id="dimension1" class="input" placeholder="">
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="dimension2">Td:</label>
+          <input type="number" id="dimension2" class="input" placeholder="">
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="materialCuerpo">Efectivo:</label>
+          <input type="text" id="materialCuerpo" class="input">
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="bc1">bc1:</label>
+          <textarea id="bc1" class="input" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="bc2">bc2:</label>
+          <textarea id="bc2" class="input" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="mp1">mp1:</label>
+          <textarea id="mp1" class="input" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="mp2">mp2:</label>
+          <textarea id="mp2" class="input" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="usd">usd:</label>
+          <textarea id="usd" class="input" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="cheque">Cheque:</label>
+          <textarea id="cheque" class="input" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="ctaCte">cta cte:</label>
+          <textarea id="ctaCte" class="input" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="total">TOTAL:</label>
+          <textarea id="total" class="input" rows="3"></textarea>
+        </div>
+
+        <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+          <button type="submit" class="btn">Guardar</button>
+        </div>
+      </form>
     </div>
 
-    <div class="form-row">
-      <label class="small" for="dimension1">tc:</label>
-      <input type="number" id="dimension1" class="input" placeholder="">
-    </div>
+    <div class="footer"></div>
+  </main>
 
-    <div class="form-row">
-      <label class="small" for="dimension2">Td :</label>
-      <input type="number" id="dimension2" class="input" placeholder="">
-    </div>
+  <script>
+    document.getElementById('form-componente').addEventListener('submit', function (e) {
+      e.preventDefault();
 
-    <div class="form-row">
-      <label class="small" for="materialCuerpo">Efectivo:</label>
-      <input type="text" id="materialCuerpo" class="input" value="">
-    </div>
+      const tipoCanal = document.getElementById('tipoCanal').value;
+      const tc = document.getElementById('dimension1').value;
+      const td = document.getElementById('dimension2').value;
+      const efectivo = document.getElementById('materialCuerpo').value;
 
-    <div class="form-row">
-      <label class="small" for="observaciones">bc1:</label>
-      <textarea id="observaciones" class="input" rows="3" placeholder=""></textarea>
-    </div>
+      const resumen = `
 
-    <div class="form-row">
-      <label class="small" for="observaciones">bc2:</label>
-      <textarea id="observaciones" class="input" rows="3" placeholder=""></textarea>
-    </div>
+      
+¡Cargado correctamente!`;
 
-    <div class="form-row">
-      <label class="small" for="observaciones">mp1:</label>
-      <textarea id="observaciones" class="input" rows="3" placeholder=""></textarea>
-    </div>
-    
-    <div class="form-row">
-      <label class="small" for="observaciones">mp2:</label>
-      <textarea id="observaciones" class="input" rows="3" placeholder=""></textarea>
-    </div>
+      alert(resumen);
+      this.reset();
+    });
+  </script>
 
-    <div class="form-row">
-      <label class="small" for="observaciones">usd:</label>
-      <textarea id="observaciones" class="input" rows="3" placeholder=""></textarea>
-    </div>
-
-    <div class="form-row">
-      <label class="small" for="observaciones">Cheque:</label>
-      <textarea id="observaciones" class="input" rows="3" placeholder=""></textarea>
-    </div>
-
-    <div class="form-row">
-      <label class="small" for="observaciones">cta cte :</label>
-      <textarea id="observaciones" class="input" rows="3" placeholder=""></textarea>
-    </div>
-
-    <div class="form-row">
-      <label class="small" for="observaciones">TOTAL:</label>
-      <textarea id="observaciones" class="input" rows="3" placeholder=""></textarea>
-    </div>
-
-
-    <div style="margin-top:12px">
-      <button type="submit" class="btn">Guardar</button>
-    </div>
-  </form>
-</div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alta Cliente</title>
+
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #fff;
+      --accent: #0ea5a1;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Inter, system-ui, Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: #111;
+    }
+    .header {
+      background: var(--card);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand { font-weight: 700; font-size: 18px; color: var(--accent); }
+    .nav { display: flex; gap: 8px; margin-left: auto; }
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #111;
+    }
+    .nav a:hover { background: #eef2f2; }
+    .container {
+      max-width: 800px;
+      margin: 28px auto;
+      padding: 18px;
+    }
+    .card {
+      background: var(--card);
+      padding: 16px;
+      border-radius: 10px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.03);
+    }
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .input, select {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #e6e6e6;
+      font-size: 14px;
+    }
+    .btn {
+      background: var(--accent);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    @media (max-width:900px) {
+      .nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="brand">Alta Cliente</div>
+    <nav class="nav">
+      <a href="./index (5).html">Inicio</a>
+      <a href="./canales.html">canales</a>
+      <a href="#">Reportes</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h3>Alta de Cliente</h3>
+      <form id="form-cliente">
+
+        <div class="form-row">
+          <label class="small" for="nombreCliente">Nombre del Cliente:</label>
+          <input type="text" id="nombreCliente" class="input" placeholder="Ej: Juan Pérez">
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="condicion">Condición:</label>
+          <select id="condicion" class="input">
+            <option value="">Seleccionar...</option>
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label class="small" for="porcentajeIngreso">Porcentaje sobre el ingreso:</label>
+          <input type="number" id="porcentajeIngreso" class="input" step="0.01" placeholder="Ej: 15.5">
+        </div>
+
+        <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+          <button type="submit" class="btn">Guardar cliente</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="footer">Gestión de clientes</div>
+  </main>
+
+  <script>
+    document.getElementById('form-cliente').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombreCliente').value.trim();
+      const condicion = document.getElementById('condicion').value;
+      const porcentaje = document.getElementById('porcentajeIngreso').value;
+
+      if (!nombre || !condicion || !porcentaje) {
+        alert('Por favor, completá todos los campos.');
+        return;
+      }
+
+      alert(`Cliente guardado exitosamente`);
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>

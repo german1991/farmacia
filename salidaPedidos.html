@@ -6,34 +6,91 @@
   <title>Salida de Pedidos</title>
 
   <style>
-  /* styles.css - simple, clean layout */
-  :root{
-    --bg:#f6f7fb; --card:#fff; --accent:#0ea5a1; --muted:#6b7280;
-  }
-  *{box-sizing:border-box}
-  body{font-family:Inter, system-ui, Arial, sans-serif;margin:0;background:var(--bg);color:#111}
-  .header{background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,0.06);display:flex;align-items:center;gap:16px;padding:12px 20px;position:sticky;top:0;z-index:10}
-  .brand{font-weight:700;font-size:18px;color:var(--accent)}
-  .nav{display:flex;gap:8px;margin-left:auto}
-  .nav a{padding:8px 10px;border-radius:6px;text-decoration:none;color:#111}
-  .nav a:hover{background:#eef2f2}
-  .container{max-width:1100px;margin:28px auto;padding:18px}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .card{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 1px 2px rgba(16,24,40,0.03)}
-  .small{font-size:13px;color:var(--muted)}
-  .table-wrapper{overflow-x:auto}
-  .table{width:100%;border-collapse:collapse}
-  .table th,.table td{padding:10px 8px;text-align:left;border-bottom:1px solid #f0f0f0}
-  .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
-  .btn.ghost{background:transparent;color:var(--accent);border:1px solid #e6f6f6}
-  .form-row{display:flex;gap:8px;margin-bottom:8px}
-  .input, textarea, select{padding:8px;border-radius:6px;border:1px solid #e6e6e6;flex:1}
-  .header-actions{display:flex;gap:8px;align-items:center}
-  .footer{margin-top:24px;color:var(--muted);font-size:13px;text-align:center}
-  @media (max-width:900px){
-    .grid{grid-template-columns:1fr}
-    .nav{display:none}
-  }
+    :root {
+      --bg: #f6f7fb;
+      --card: #fff;
+      --accent: #0ea5a1;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Inter, system-ui, Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: #111;
+    }
+    .header {
+      background: var(--card);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand { font-weight: 700; font-size: 18px; color: var(--accent); }
+    .nav { display: flex; gap: 8px; margin-left: auto; }
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #111;
+    }
+    .nav a:hover { background: #eef2f2; }
+    .container { max-width: 1100px; margin: 28px auto; padding: 18px; }
+    .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .card {
+      background: var(--card);
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.03);
+    }
+    .small { font-size: 13px; color: var(--muted); }
+    .btn {
+      background: var(--accent);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn.ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid #e6f6f6;
+    }
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 12px;
+      border: 1px solid #e6e6e6;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .input, textarea, select {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #e6e6e6;
+    }
+    textarea.input {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .header-actions { display: flex; gap: 8px; align-items: center; }
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    @media (max-width:900px) {
+      .grid { grid-template-columns: 1fr; }
+      .nav { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -48,7 +105,7 @@
     </nav>
 
     <div class="header-actions">
-      <button id="addRow" class="btn">Agregar fila</button>
+      <button id="addRow" class="btn"></button>
       <button id="exportJson" class="btn ghost">Exportar JSON</button>
     </div>
   </header>
@@ -58,73 +115,93 @@
       <div class="card" style="grid-column: 1 / -1;">
         <div class="small">Tabla: <strong>SALIDA DE PEDIDOS</strong></div>
 
-        <div class="table-wrapper">
-          <table class="table" id="pedidosTable" aria-label="Salida de pedidos">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>N° Operación</th>
-                <th>Canales (solo figura si no estaba pagado)</th>
-                <th>Observaciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- fila ejemplo / editable -->
-              <tr>
-                <td><input class="input" type="date" name="fecha"></td>
-                <td><input class="input" type="text" name="nroOperacion" placeholder="Ej: 12345"></td>
-                <td><input class="input" type="text" name="canales" placeholder="Ej: Canal Online"></td>
-                <td><textarea class="input" name="observaciones" rows="1" placeholder="Escribir observaciones..."></textarea></td>
-              </tr>
-            </tbody>
-          </table>
+        <div id="formularioPedidos">
+          <!-- Aquí se agregan las filas dinámicamente -->
         </div>
 
         <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
-          <button id="removeLast" class="btn ghost">Eliminar última fila</button>
+          <button id="guardarConfirmar" class="btn">Guardar y confirmar</button>
+
         </div>
       </div>
     </div>
 
-    <div class="footer"></div>
+    <div class="footer">Ingreso de pedidos</div>
   </main>
 
   <script>
-    // Espera que el DOM esté cargado
     document.addEventListener('DOMContentLoaded', function () {
       const addBtn = document.getElementById('addRow');
       const removeBtn = document.getElementById('removeLast');
       const exportBtn = document.getElementById('exportJson');
-      const tbody = document.getElementById('pedidosTable').querySelector('tbody');
+      crearFilaFormulario(); // crea la primera fila automáticamente
+
+      const container = document.getElementById('formularioPedidos');
 
       addBtn.addEventListener('click', () => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><input class="input" type="date" name="fecha"></td>
-          <td><input class="input" type="text" name="nroOperacion" placeholder="Ej: 12345"></td>
-          <td><input class="input" type="text" name="canales" placeholder="Ej: Canal Online"></td>
-          <td><textarea class="input" name="observaciones" rows="1" placeholder="Escribir observaciones..."></textarea></td>
+        const div = document.createElement('div');
+        div.className = 'form-row';
+        div.innerHTML = `
+          <label>Fecha</label>
+          <input class="input" type="date" name="fecha">
+
+          <label>N° Operación</label>
+          <input class="input" type="text" name="nroOperacion" placeholder="Ej: 12345">
+
+          <label>Canales (solo figura si no estaba pagado)</label>
+          <input class="input" type="text" name="canales" placeholder="Ej: Canal Online">
+
+          <label>Observaciones</label>
+          <textarea class="input" name="observaciones" rows="4" placeholder="Escribir observaciones..."></textarea>
         `;
-        tbody.appendChild(tr);
+        container.appendChild(div);
       });
 
-      removeBtn.addEventListener('click', () => {
-        if (tbody.rows.length > 0) tbody.removeChild(tbody.lastElementChild);
-      });
+      const guardarBtn = document.getElementById('guardarConfirmar');
+
+guardarBtn.addEventListener('click', () => {
+  const rows = Array.from(document.querySelectorAll('#formularioPedidos .form-row'));
+  const data = rows.map(r => {
+    const fecha = r.querySelector('input[name="fecha"]')?.value || '';
+    const nro = r.querySelector('input[name="nroOperacion"]')?.value || '';
+    const canales = r.querySelector('input[name="canales"]')?.value || '';
+    const obs = r.querySelector('textarea[name="observaciones"]')?.value || '';
+    return { fecha, nroOperacion: nro, canales, observaciones: obs };
+  });
+
+  alert('Pedido guardado correctamente:\n\n' + JSON.stringify(data[data.length - 1], null, 2));
+
+  crearFilaFormulario(); // agrega una nueva fila vacía
+});
+
+
+function crearFilaFormulario() {
+  const div = document.createElement('div');
+  div.className = 'form-row';
+  div.innerHTML = `
+    <label>Fecha</label>
+    <input class="input" type="date" name="fecha">
+
+    <label>N° Operación</label>
+    <input class="input" type="text" name="nroOperacion" placeholder="Ej: 12345">
+
+    <label>Canales (solo figura si no estaba pagado)</label>
+    <input class="input" type="text" name="canales" placeholder=" Canal ">
+
+    <label>Observaciones</label>
+    <textarea class="input" name="observaciones" rows="4" placeholder="Escribir observaciones..."></textarea>
+  `;
+  document.getElementById('formularioPedidos').appendChild(div);
+}
+
 
       exportBtn.addEventListener('click', () => {
-        const rows = Array.from(tbody.querySelectorAll('tr'));
+        const rows = Array.from(container.querySelectorAll('.form-row'));
         const data = rows.map(r => {
-          const fechaEl = r.querySelector('input[name="fecha"]');
-          const nroEl = r.querySelector('input[name="nroOperacion"]');
-          const canalesEl = r.querySelector('input[name="canales"]');
-          const obsEl = r.querySelector('textarea[name="observaciones"]');
-
-          const fecha = fechaEl ? fechaEl.value : '';
-          const nro = nroEl ? nroEl.value : '';
-          const canales = canalesEl ? canalesEl.value : '';
-          const obs = obsEl ? obsEl.value : '';
-
+          const fecha = r.querySelector('input[name="fecha"]')?.value || '';
+          const nro = r.querySelector('input[name="nroOperacion"]')?.value || '';
+          const canales = r.querySelector('input[name="canales"]')?.value || '';
+          const obs = r.querySelector('textarea[name="observaciones"]')?.value || '';
           return { fecha, nroOperacion: nro, canales, observaciones: obs };
         });
 

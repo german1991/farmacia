@@ -78,25 +78,62 @@
       font-size: 13px;
       text-align: center;
     }
+    .nav {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.nav details summary {
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.nav a {
+    display: block;
+    margin-left: 10px;
+    padding: 2px 0;
+}
+
   </style>
 </head>
 <body>
 
   <header class="header">
-    <div class="brand">Farmacia - Demo</div>
-    <div class="header-actions small">Usuario: Demo</div>
-    <div class="nav">
-      <a href="ingreso.html">Ingreso Pedidos</a>
-      <a href="salidaPedidos.html">Salida Pedidos</a>
-      <a href="envios.html">Envíos</a>
-      <a href="arqueo.html">Arqueo Caja</a>
-      <a href="planCuentas.html">Plan Cuentas</a>
-      <a href="cuentas.html">Cuentas</a>
-      <a href="reportes.html">Reportes</a>
-      <a href="canales.html">Canales</a>
-      <a href="altaClientes.html">Alta de clientes</a>
-      <a href="cuentaCorriente.html">Cuenta corriente</a>
-    </div>
+   <nav class="nav">
+    <a href="index (5).html" class="nav-home">Inicio</a>
+    <details>
+        <summary>Trabajo</summary>
+        <a href="ingreso.html">Ingreso de pedidos</a>
+        <a href="salidaPedidos.html">Salida de pedidos</a>
+        <a href="envios.html">Envíos</a>
+        <a href="arqueo.html">Arqueo Caja</a>
+        <a href="index.html">Imprimir</a>
+    </details>
+
+    <details>
+        <summary>Administración</summary>
+        <a href="planCuentas.html">Plan de cuentas</a>
+        <a href="cuentaCorriente.html">Cuenta corriente</a>
+        <a href="reportesClientes.html">Reporte clientes</a>
+        <a href="cuentas.html">Alta de clientes</a>
+    </details>
+
+    <details>
+        <summary>Gerencia</summary>
+        <a href="reportes.html">Reportes</a>
+        <a href="usuarios.html">Usuarios y permisos</a>
+    </details>
+
+    <details>
+        <summary>Sistema</summary>
+        <a href="configuracion.html">Configuración</a>
+        <a href="auditoria.html">Auditoría</a>
+    </details>
+
+</nav>
+
   </header>
 
   <main class="container">

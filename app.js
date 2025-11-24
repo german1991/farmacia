@@ -1,16 +1,21 @@
+// app.js - lógica completa del sistema
+const STORAGE_KEY = "farmacia_pedidos_v2";
 
-// app.js - shared logic for pages (uses localStorage)
-const STORAGE_KEY = "farmacia_pedidos_v1";
-
+// -------------------- STORAGE --------------------
 function loadPedidos(){
   const raw = localStorage.getItem(STORAGE_KEY);
   return raw ? JSON.parse(raw) : [];
 }
+
 function savePedidos(list){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 }
-function genId(){ return Math.random().toString(36).slice(2,9); }
 
+function genId(){
+  return Math.random().toString(36).slice(2,9);
+}
+
+// -------------------- CRUD --------------------
 function addPedido(pedido){
   const list = loadPedidos();
   list.unshift(pedido);
@@ -19,117 +24,185 @@ function addPedido(pedido){
 
 function updatePedidoStatus(id, status){
   const list = loadPedidos();
-  const idx = list.findIndex(p=>p.id===id);
-  if(idx!==-1){ list[idx].status = status; savePedidos(list); return true; }
+  const idx = list.findIndex(p => p.id === id);
+  if(idx !== -1){
+    list[idx].estado = status;
+    savePedidos(list);
+    return true;
+  }
   return false;
 }
 
 function removePedido(id){
   let list = loadPedidos();
-  list = list.filter(p=>p.id!==id);
+  list = list.filter(p => p.id !== id);
   savePedidos(list);
 }
 
-function renderPedidosTable(targetSelector, options={}){
+// -------------------- TABLA --------------------
+function renderPedidosTable(targetSelector, options = {}){
   const container = document.querySelector(targetSelector);
   if(!container) return;
+
   const list = loadPedidos();
-  const filtered = options.status ? list.filter(p=>p.status===options.status) : list;
-  if(filtered.length===0){
-    container.innerHTML = '<div class="small">No hay pedidos.</div>'; return;
+  const filtered = options.status ? list.filter(p => p.estado === options.status) : list;
+
+  if(filtered.length === 0){
+    container.innerHTML = '<div class="small">No hay pedidos.</div>';
+    return;
   }
-  const rows = filtered.map(p=>{
-    return `<tr>
+
+  const rows = filtered.map(p => `
+    <tr>
       <td>${p.id}</td>
       <td>${p.cliente}</td>
       <td>${p.items}</td>
-      <td class="small">${p.status}</td>
+      <td class="small">${p.estado}</td>
       <td>
-        ${options.showActions ? `<button class="btn" onclick="onVer('${p.id}')">Ver</button>` : ''}
-        ${options.allowProcess ? `<button class="btn ghost" onclick="onProcesar('${p.id}')">Procesar</button>` : ''}
-        ${options.allowShip ? `<button class="btn ghost" onclick="onEnviar('${p.id}')">Enviar</button>` : ''}
+        <button class="btn" onclick="onVer('${p.id}')">Ver</button>
+        <button class="btn ghost" onclick="onProcesar('${p.id}')">Procesar</button>
+        <button class="btn ghost" onclick="onEnviar('${p.id}')">Enviar</button>
         <button class="btn ghost" onclick="onEliminar('${p.id}')">Eliminar</button>
       </td>
-    </tr>`}).join("");
-  container.innerHTML = `<table class="table"><thead><tr><th>ID</th><th>Cliente</th><th>Items</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>${rows}</tbody></table>`;
+    </tr>
+  `).join("");
+
+  container.innerHTML = `
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th><th>Cliente</th><th>Items</th><th>Estado</th><th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
 }
 
+// -------------------- ACCIONES --------------------
 function onVer(id){
-  const list = loadPedidos();
-  const p = list.find(x=>x.id===id);
+  const p = loadPedidos().find(x => x.id === id);
   if(!p){ alert("Pedido no encontrado"); return; }
-  alert(`Pedido ${p.id}\nCliente: ${p.cliente}\nItems: ${p.items}\nEstado: ${p.status}\nNotas: ${p.notas||''}`);
+
+  alert(
+    `Pedido ${p.id}
+Cliente: ${p.cliente}
+Items: ${p.items}
+Paciente: ${p.paciente}
+Fecha: ${p.fecha}
+Operación: ${p.nroOperacion}
+Doctor: ${p.doctor}
+% Comisión: ${p.comision}
+Nro RP: ${p.nroRP}
+Canal: ${p.canal}
+Envío: ${p.envio}
+Estado: ${p.estado}
+Notas: ${p.notas}
+
+(Receta y pago guardados en base64)`
+  );
 }
 
 function onProcesar(id){
-  if(confirm("Marcar pedido como 'Procesado'?")){
-    updatePedidoStatus(id,'Procesado');
+  if(confirm("¿Marcar como Procesado?")){
+    updatePedidoStatus(id, "Procesado");
     location.reload();
   }
 }
 
 function onEnviar(id){
-  if(confirm("Marcar pedido como 'Enviado'?")){
-    updatePedidoStatus(id,'Enviado');
+  if(confirm("¿Marcar como Enviado?")){
+    updatePedidoStatus(id, "Enviado");
     location.reload();
   }
 }
 
 function onEliminar(id){
-  if(confirm("Eliminar pedido?")){
+  if(confirm("¿Eliminar pedido?")){
     removePedido(id);
     location.reload();
   }
 }
 
-// Helpers for forms
+// -------------------- FORMULARIO --------------------
+async function fileToBase64(file){
+  return new Promise((resolve) => {
+    if(!file) return resolve(null);
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.readAsDataURL(file);
+  });
+}
+
 function handleIngresoForm(formId){
   const f = document.getElementById(formId);
   if(!f) return;
-  f.addEventListener('submit', (e)=>{
+
+  f.addEventListener("submit", async (e)=>{
     e.preventDefault();
-    const cliente = f.querySelector('[name=cliente]').value.trim();
-    const items = f.querySelector('[name=items]').value.trim();
-    const notas = f.querySelector('[name=notas]').value.trim();
-    if(!cliente || !items){ alert("Complete cliente e items"); return; }
-    const pedido = { id: genId(), cliente, items, notas, status: 'Pendiente', createdAt: new Date().toISOString() };
+
+    // Campos
+    const cliente = f.cliente.value.trim();
+    const items = f.items.value.trim();
+
+    if(!cliente || !items){
+      alert("Complete Cliente e Items.");
+      return;
+    }
+
+    const receta = await fileToBase64(f.fotoReceta.files[0]);
+    const pago = await fileToBase64(f.fotoPago.files[0]);
+
+    const pedido = {
+      id: genId(),
+      cliente,
+      items,
+      paciente: f.paciente.value.trim(),
+      fecha: f.fecha.value,
+      nroOperacion: f.nroOperacion.value.trim(),
+      tipoOperacion: f.tipoOperacion.value,
+      doctor: f.doctor.value.trim(),
+      comision: f.comision.value.trim(),
+      nroRP: f.nroRP.value.trim(),
+      canal: f.canal.value,
+      envio: f.envio.value.trim(),
+      estado: f.estado.value,
+      notas: f.notas.value.trim(),
+      receta,
+      pago,
+      createdAt: new Date().toISOString()
+    };
+
     addPedido(pedido);
+
+    alert("Pedido creado correctamente.");
     f.reset();
-    alert("Pedido creado!");
     window.location.href = "index.html";
   });
 }
 
-// Quick dashboard stats
-function renderDashboardStats(){
-  const list = loadPedidos();
-  const total = list.length;
-  const pendientes = list.filter(p=>p.status==='Pendiente').length;
-  const procesados = list.filter(p=>p.status==='Procesado').length;
-  const enviados = list.filter(p=>p.status==='Enviado').length;
-  const elTotal = document.getElementById('stat-total');
-  if(elTotal) elTotal.textContent = total;
-  const elPend = document.getElementById('stat-pend');
-  if(elPend) elPend.textContent = pendientes;
-  const elProc = document.getElementById('stat-proc');
-  if(elProc) elProc.textContent = procesados;
-  const elEnv = document.getElementById('stat-env');
-  if(elEnv) elEnv.textContent = enviados;
-}
-
-// Simple sample data loader (for demo)
+// -------------------- SEED --------------------
 function seedSampleData(){
   if(localStorage.getItem(STORAGE_KEY)) return;
+
   const sample = [
-    { id: genId(), cliente: 'Rosa Perez', items: 'Ibuprofeno x1, Jarabe x1', notas: 'Retira en local', status:'Pendiente', createdAt: new Date().toISOString() },
-    { id: genId(), cliente: 'Juan Gomez', items: 'Vitamina C x2', notas: '', status:'Procesado', createdAt: new Date().toISOString() },
-    { id: genId(), cliente: 'Clara Ruiz', items: 'Antibiotico x1', notas: 'Envio a domicilio', status:'Enviado', createdAt: new Date().toISOString() }
+    {
+      id: genId(),
+      cliente: "Rosa Pérez",
+      items: "Ibuprofeno x1, Jarabe x1",
+      estado: "Pendiente",
+      paciente: "Paciente 1",
+      fecha: "2025-11-24",
+      notas: "Retira en local",
+      receta: null,
+      pago: null
+    }
   ];
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sample));
+
+  savePedidos(sample);
 }
 
-// expose some functions to window for inline onclicks
+// -------------------- EXPOSE --------------------
 window.renderPedidosTable = renderPedidosTable;
 window.handleIngresoForm = handleIngresoForm;
-window.renderDashboardStats = renderDashboardStats;
 window.seedSampleData = seedSampleData;

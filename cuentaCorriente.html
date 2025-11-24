@@ -1,152 +1,201 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cuentas corrientes</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reporte de Clientes</title>
 
   <style>
-    :root {
-      --bg: #f6f7fb;
-      --card: #fff;
-      --accent: #0ea5a1;
-      --muted: #6b7280;
-    }
-    * { box-sizing: border-box; }
     body {
-      font-family: Inter, system-ui, Arial, sans-serif;
+      font-family: Inter, Arial, sans-serif;
       margin: 0;
-      background: var(--bg);
-      color: #111;
+      background: #f6f7fb;
     }
-    .header {
-      background: var(--card);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    header {
+      background: white;
+      padding: 15px 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 12px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      justify-content: space-between;
     }
-    .brand { font-weight: 700; font-size: 18px; color: var(--accent); }
-    .nav { display: flex; gap: 8px; margin-left: auto; }
-    .nav a {
-      padding: 8px 10px;
-      border-radius: 6px;
-      text-decoration: none;
-      color: #111;
-    }
-    .nav a:hover { background: #eef2f2; }
+    .brand { font-weight: 700; color: #0ea5a1; font-size: 18px; }
     .container {
-      max-width: 800px;
-      margin: 28px auto;
-      padding: 18px;
+      max-width: 1100px;
+      margin: 25px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
     }
-    .card {
-      background: var(--card);
-      padding: 16px;
-      border-radius: 10px;
-      box-shadow: 0 1px 2px rgba(16,24,40,0.03);
-    }
-    .form-row {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-bottom: 12px;
-    }
-    .input, select {
+    input {
       padding: 8px;
+      width: 100%;
       border-radius: 6px;
-      border: 1px solid #e6e6e6;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
       font-size: 14px;
     }
-    .btn {
-      background: var(--accent);
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
     }
-    .small {
-      font-size: 13px;
-      color: var(--muted);
+    th {
+      background: #e9f6f6;
+      font-weight: bold;
     }
-    .footer {
-      margin-top: 24px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-    }
-    @media (max-width:900px) {
-      .nav { display: none; }
-    }
+    .saldo-positivo { color: green; font-weight: 700; }
+    .saldo-negativo { color: red; font-weight: 700; }
+    .nav {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.nav details summary {
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.nav a {
+    display: block;
+    margin-left: 10px;
+    padding: 2px 0;
+}
+
   </style>
 </head>
+
 <body>
+		<nav class="nav">
 
-  <header class="header">
-    <div class="brand">Cuentas corrientes</div>
-    <nav class="nav">
-      <a href="index.html">Inicio</a>
-    </nav>
-  </header>
+    <a href="index (5).html" class="nav-home">Inicio</a>
 
-  <main class="container">
-    <div class="card">
-      <h3>Cuentas corrientes</h3>
-      <form id="form-caso">
+    <details>
+        <summary>Trabajo</summary>
+        <a href="ingreso.html">Ingreso de pedidos</a>
+        <a href="salidaPedidos.html">Salida de pedidos</a>
+        <a href="envios.html">Envíos</a>
+        <a href="arqueo.html">Arqueo Caja</a>
+        <a href="index.html">Imprimir</a>
+    </details>
 
-        <div class="form-row">
-          <label class="small" for="nroOperacion">N° Operación:</label>
-          <input type="text" id="nroOperacion" class="input" placeholder="Ej: 12345">
-        </div>
+    <details>
+        <summary>Administración</summary>
+        <a href="planCuentas.html">Plan de cuentas</a>
+        <a href="cuentaCorriente.html">Cuenta corriente</a>
+        <a href="reportesClientes.html">Reporte clientes</a>
+        <a href="cuentas.html">Alta de clientes</a>
+    </details>
 
-        <div class="form-row">
-          <label class="small" for="fecha">Fecha:</label>
-          <input type="date" id="fecha" class="input">
-        </div>
+    <details>
+        <summary>Gerencia</summary>
+        <a href="reportes.html">Reportes</a>
+        <a href="usuarios.html">Usuarios y permisos</a>
+    </details>
 
-        <div class="form-row">
-          <label class="small" for="ctaCte">CTA CTE:</label>
-          <input type="text" id="ctaCte" class="input" placeholder="Ej: Cuenta 001">
-        </div>
+    <details>
+        <summary>Sistema</summary>
+        <a href="configuracion.html">Configuración</a>
+        <a href="auditoria.html">Auditoría</a>
+    </details>
 
-        <div class="form-row">
-          <label class="small" for="ingreso">Ingreso:</label>
-          <input type="number" id="ingreso" class="input" step="0.01" placeholder="0.00">
-        </div>
+</nav>
 
-        <div class="form-row">
-          <label class="small" for="egreso">Egreso:</label>
-          <input type="number" id="egreso" class="input" step="0.01" placeholder="0.00">
-        </div>
+<header>
+  <div class="brand">Reporte de Clientes</div>
+</header>
 
-        <div style="margin-top:12px; display:flex; justify-content:flex-end;">
-          <button type="submit" class="btn">Guardar caso</button>
-        </div>
-      </form>
-    </div>
+<div class="container">
 
-    <div class="footer"></div>
-  </main>
+  <h3>Buscar cliente</h3>
+  <input type="text" id="search" placeholder="Buscar por nombre o apellido...">
 
-  <script>
-    document.getElementById('form-caso').addEventListener('submit', function (e) {
-      e.preventDefault();
+  <table id="tablaClientes">
+    <thead>
+      <tr>
+        <th>Cliente</th>
+        <th>Nº Operación</th>
+        <th>Ingreso</th>
+        <th>Egreso</th>
+        <th>Saldo</th>
+        <th>Resultado</th>
+        <th>Observaciones</th>
+      </tr>
+    </thead>
 
-      const operacion = document.getElementById('nroOperacion').value;
-      const fecha = document.getElementById('fecha').value;
-      const ctaCte = document.getElementById('ctaCte').value;
-      const ingreso = document.getElementById('ingreso').value || '0';
-      const egreso = document.getElementById('egreso').value || '0';
+    <tbody id="bodyTabla">
+      <!-- Cargado por JS -->
+    </tbody>
+  </table>
 
-      alert(`Guardado correctamente`);
-      this.reset();
-    });
-  </script>
+</div>
+
+<script>
+  // Datos de ejemplo — los podés cambiar por datos reales o cargar desde JSON
+  const datos = [
+    {
+      cliente: "SOBARZO MARTIN",
+      operacion: "172479",
+      ingreso: 123000,
+      egreso: 0,
+      obs: ""
+    },
+    {
+      cliente: "CABRERA ROMINA",
+      operacion: "172469",
+      ingreso: 41000,
+      egreso: 0,
+      obs: "BCO"
+    },
+    {
+      cliente: "MONTANIEL EUGENIA",
+      operacion: "172505",
+      ingreso: 157500,
+      egreso: 0,
+      obs: "EFVO"
+    }
+  ];
+
+  function cargarTabla(filtro = "") {
+    const tbody = document.getElementById("bodyTabla");
+    tbody.innerHTML = "";
+
+    datos
+      .filter(d => d.cliente.toLowerCase().includes(filtro.toLowerCase()))
+      .forEach(reg => {
+        const saldo = reg.ingreso - reg.egreso;
+        const estado = saldo > 0 ? "A COBRAR" :
+                       saldo < 0 ? "A PAGAR" : "OK";
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${reg.cliente}</td>
+            <td>${reg.operacion}</td>
+            <td>$${reg.ingreso.toLocaleString()}</td>
+            <td>$${reg.egreso.toLocaleString()}</td>
+            <td class="${saldo >= 0 ? 'saldo-positivo' : 'saldo-negativo'}">
+              $${saldo.toLocaleString()}
+            </td>
+            <td>${estado}</td>
+            <td>${reg.obs || "-"}</td>
+          </tr>
+        `;
+      });
+  }
+
+  cargarTabla();
+
+  document.getElementById("search").addEventListener("input", e => {
+    cargarTabla(e.target.value);
+  });
+</script>
 
 </body>
 </html>

@@ -3,8 +3,11 @@
 <head>
   <meta charset="utf-8">
     <script>
-    window.location.href = "login.html";
-  </script>
+      if (localStorage.getItem("logged") !== "true") {
+        window.location.href = "login.html";
+      }
+</script>
+
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Bienvenida - Farmacia</title>

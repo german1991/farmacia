@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-    <a href="#" onclick="logout()">Cerrar sesión</a>
     <script>
       if (localStorage.getItem("logged") !== "true") {
         window.location.href = "login.html";
@@ -107,6 +106,7 @@
   </style>
 </head>
 <body>
+   <a href="#" onclick="logout()">Cerrar sesión</a>
 
   <header class="header">
    <nav class="nav">
@@ -152,6 +152,15 @@
     </div>
     <div class="footer">Farmacia - Demo</div>
   </main>
+    <script>
+    function logout() {
+      // Borra la sesión
+      localStorage.removeItem("logged");
+
+      // Redirige al login
+      window.location.href = "login.html";
+    }
+  </script>
 
 </body>
 </html>

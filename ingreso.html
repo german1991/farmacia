@@ -1,65 +1,169 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ingreso Pedidos - Farmacia</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ingreso Pedidos - Farmacia</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .preview-img {
+      position: relative;
+      display: inline-block;
+    }
+    .preview-img img {
+      max-width: 120px;
+      max-height: 120px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .preview-img button {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .nav {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .nav details summary {
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .nav a {
+      display: block;
+      margin-left: 10px;
+      padding: 2px 0;
+    }
+  </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="brand">Farmacia - Demo</div>
-  <div class="header-actions small">Usuario: Demo</div>
-  <div class="nav">
-    <a href="index.html">Inicio</a>
-    <a href="ingreso.html">Ingreso Pedidos</a>
-    <a href="salidaPedidos.html">Salida Pedidos</a>
-    <a href="envios.html">Envíos</a>
-    <a href="arqueo.html">Arqueo Caja</a>
-    <a href="planCuentas.html">Plan Cuentas</a>
-    <a href="cuentas.html">Cuentas</a>
-    <a href="reportes.html">Reportes</a>
-    <a href="canales.html">canales</a>
-  </div>
-</div>
+<nav class="nav">
+  <a href="index (5).html">Inicio</a>
+
+  <details>
+      <summary>Trabajo</summary>
+      <a href="ingreso.html">Ingreso de pedidos</a>
+      <a href="salidaPedidos.html">Salida de pedidos</a>
+      <a href="envios.html">Envíos</a>
+      <a href="arqueo.html">Arqueo Caja</a>
+      <a href="index.html">Imprimir</a>
+  </details>
+
+  <details>
+      <summary>Administración</summary>
+      <a href="planCuentas.html">Plan de cuentas</a>
+      <a href="cuentaCorriente.html">Cuenta corriente</a>
+      <a href="reportesClientes.html">Reporte clientes</a>
+      <a href="cuentas.html">Alta de clientes</a>
+  </details>
+
+  <details>
+      <summary>Gerencia</summary>
+      <a href="reportes.html">Reportes</a>
+      <a href="usuarios.html">Usuarios y permisos</a>
+  </details>
+
+  <details>
+      <summary>Sistema</summary>
+      <a href="configuracion.html">Configuración</a>
+      <a href="auditoria.html">Auditoría</a>
+  </details>
+</nav>
 
 <main class="container">
   <div class="card">
     <h3>Crear nuevo pedido</h3>
     <form id="form-ingreso">
       <div class="form-row">
+
         <input class="input" name="cliente" placeholder="Nombre del cliente">
-        <input class="input" name="items" placeholder="Items (ej: Ibuprofeno x1, Jarabe x1)">
-        <input class="input" name="items" placeholder="Nombre del paciente">
-        <input class="input" name="items" placeholder="Fecha">
-        <input class="input" name="items" placeholder="numero de operacion">
-        <input class="input" name="items" placeholder="Cuenta corriente">
-        <input class="input" name="items" placeholder="canales">
-        <input class="input" name="items" placeholder="envio">
+
+        <input class="input" name="items" placeholder="Items (Ibuprofeno x1)">
+        
+        <input class="input" name="paciente" placeholder="Nombre del paciente">
+
+        <input class="input" type="date" name="fecha" id="fecha">
+
+
+        <input class="input" name="nroOperacion" placeholder="Número de operación">
+
+        <label>Tipo de operación:</label>
+        <select name="tipoOperacion" class="input">
+          <option value="">Seleccione</option>
+          <option value="venta">Venta</option>
+          <option value="egreso">Egreso</option>
+        </select>
+
+        <input class="input" name="doctor" placeholder="DR/DRA">
+
+        <input class="input" name="comision" placeholder="% comisión">
+
+        <input class="input" name="nroRP" placeholder="Nro RP">
+
+        <label>Estado:</label>
+        <select name="estado" class="input">
+          <option value="">Seleccione estado</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Procesado">Procesado</option>
+          <option value="Enviado">Enviado</option>
+        </select>
+
+        <label>Canal:</label>
+        <select name="canal" class="input">
+          <option value="">Seleccione canal</option>
+          <option value="tc">TC</option>
+          <option value="td">TD</option>
+          <option value="efectivo">Efectivo</option>
+          <option value="mp">Mercado Pago</option>
+        </select>
+
+        <input class="input" name="envio" placeholder="Envío">
+
+        <!-- Foto receta -->
+        <label>Foto de receta:</label>
+        <input type="file" id="fotoReceta" name="fotoReceta" accept="image/*" class="input">
+        <div id="previewReceta" class="preview-img"></div>
+
+        <!-- Foto pago -->
+        <label>Foto del pago:</label>
+        <input type="file" id="fotoPago" name="fotoPago" accept="image/*" class="input">
+        <div id="previewPago" class="preview-img"></div>
+
       </div>
-      <div style="margin-bottom:8px">
-        <textarea name="notas" rows="3" placeholder="Notas" style="width:100%;padding:8px;border-radius:6px;border:1px solid #e6e6e6"></textarea>
-      </div>
-      <div>
-        <button class="btn" type="submit">Guardar pedido</button>
-        <a class="btn ghost" href="index.html" style="margin-left:8px">Volver</a>
-      </div>
+
+      <textarea name="notas" rows="3" placeholder="Notas" class="input"></textarea>
+
+      <button class="btn" type="submit">Guardar pedido</button>
+      <a class="btn ghost" href="index (5).html">Volver</a>
     </form>
   </div>
 
-  <div style="margin-top:16px" class="card">
+  <div class="card">
     <h3>Pedidos Pendientes</h3>
     <div id="pendientes-list"></div>
   </div>
-
-  <div class="footer">Ingreso de pedidos</div>
 </main>
 
 <script src="app.js"></script>
+
 <script>
   seedSampleData();
   handleIngresoForm('form-ingreso');
-  renderPedidosTable('#pendientes-list',{status:'Pendiente', showActions:true, allowProcess:true});
+  renderPedidosTable('#pendientes-list', {status:'Pendiente'});
+  document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+
 </script>
+
 </body>
 </html>

@@ -4,16 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Alta Cliente - Farmacia</title>
-  <link rel="stylesheet" href="styles.css">
   <style>
-    /* Estilos mínimos para que se vea bien */
     body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:16px;background:#f7f7f8}
     .container{max-width:980px;margin:0 auto}
     .card{background:white;border-radius:8px;padding:16px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
     h3{margin:0 0 12px 0}
     .form-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
     .form-row label.small{width:120px;align-self:center}
-    .input, textarea, select {flex:1;padding:8px;border-radius:6px;border:1px solid #ddd;min-width:180px}
+    .input, textarea {flex:1;padding:8px;border-radius:6px;border:1px solid #ddd;min-width:180px}
     textarea{min-height:68px}
     .btn{background:#1976d2;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
     .btn.ghost{background:transparent;border:1px solid #ccc;color:#333}
@@ -30,35 +28,73 @@
     @media (max-width:700px){ .form-row{flex-direction:column} .form-row label.small{width:100%} }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <nav class="nav">
-      <a href="index.html">Inicio</a>
-      <details><summary>Trabajo</summary><a href="ingreso.html">Ingreso de pedidos</a></details>
-      <details><summary>Administración</summary><a href="cuentas.html">Alta de clientes</a></details>
-    </nav>
 
+    <!-- NAV COMPLETO -->
+    <header class="header">
+      <nav class="nav">
+        <a href="index (5).html" class="nav-home">Inicio</a>
+
+        <details>
+            <summary>Trabajo</summary>
+            <a href="ingreso.html">Ingreso de pedidos</a>
+            <a href="salidaPedidos.html">Salida de pedidos</a>
+            <a href="envios.html">Envíos</a>
+            <a href="arqueo.html">Arqueo Caja</a>
+            <a href="index.html">Imprimir</a>
+        </details>
+
+        <details>
+            <summary>Administración</summary>
+            <a href="planCuentas.html">Plan de cuentas</a>
+            <a href="cuentaCorriente.html">Cuenta corriente</a>
+            <a href="reportesClientes.html">Reporte clientes</a>
+            <a href="cuentas.html">Alta de clientes</a>
+        </details>
+
+        <details>
+            <summary>Gerencia</summary>
+            <a href="reportes.html">Reportes</a>
+            <a href="usuarios.html">Usuarios y permisos</a>
+        </details>
+
+        <details>
+            <summary>Sistema</summary>
+            <a href="configuracion.html">Configuración</a>
+            <a href="auditoria.html">Auditoría</a>
+        </details>
+      </nav>
+    </header>
+
+    <!-- FORMULARIO -->
     <div class="card">
       <h3>Alta / Edición de Cliente</h3>
-      <div class="note">Completa los datos y presiona <strong>Guardar</strong>. El porcentaje debe ser un número entre 0 y 100.</div>
+      <div class="note">Completa los datos y presiona <strong>Guardar</strong>. El porcentaje debe ser entre 0 y 100.</div>
 
       <form id="form-cliente" autocomplete="off">
         <input type="hidden" id="clienteId" value="">
+
         <div class="form-row">
           <label class="small" for="nombre">Nombre:</label>
-          <input id="nombre" name="nombre" class="input" placeholder="Razón social o nombre" required>
+          <input id="nombre" name="nombre" class="input" required placeholder="Razón social o nombre">
         </div>
 
-        
+        <!-- MODIFICADO: CAMPO LIBRE "Condición Comercial" -->
+        <div class="form-row">
+          <label class="small" for="condicion">Condición Comercial:</label>
+          <input id="condicion" name="condicion" class="input" placeholder="Ej: Mayorista, Minorista, Convenio, etc.">
+        </div>
 
         <div class="form-row">
           <label class="small" for="porcentaje">Porcentaje (%):</label>
-          <input id="porcentaje" name="porcentaje" class="input" type="number" min="0" max="100" step="0.01" placeholder="Ej: 10.5">
+          <input id="porcentaje" name="porcentaje" type="number" min="0" max="100" step="0.01" class="input">
         </div>
 
         <div class="form-row">
           <label class="small" for="comentarios">Comentarios:</label>
-          <textarea id="comentarios" name="comentarios" class="input" placeholder="Observaciones internas (opcional)"></textarea>
+          <textarea id="comentarios" class="input"></textarea>
         </div>
 
         <div style="margin-top:12px;display:flex;gap:8px">
@@ -69,6 +105,7 @@
       </form>
     </div>
 
+    <!-- LISTADO -->
     <div class="card">
       <h3>Clientes registrados</h3>
 
@@ -86,23 +123,22 @@
   </div>
 
 <script>
-/* Alta Clientes - funcional sin backend (localStorage) */
 (() => {
   const STORAGE_KEY = 'farmacia_clientes_v1';
 
-  // Utils
   const $ = sel => document.querySelector(sel);
   const byId = id => document.getElementById(id);
+
   function loadClientes(){ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
   function saveClientes(list){ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
   function genId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
 
-  // CRUD
   function crearCliente(obj){
     const list = loadClientes();
     list.unshift(obj);
     saveClientes(list);
   }
+
   function actualizarCliente(id, changes){
     const list = loadClientes();
     const idx = list.findIndex(c => c.id === id);
@@ -111,19 +147,19 @@
     saveClientes(list);
     return true;
   }
+
   function borrarCliente(id){
     let list = loadClientes();
     list = list.filter(c => c.id !== id);
     saveClientes(list);
   }
 
-  // Validaciones
   function validarDatos({nombre, porcentaje}) {
-    if(!nombre || nombre.trim() === '') return {ok:false,msg:'El nombre es obligatorio.'};
-    if(porcentaje !== '' && porcentaje !== null && porcentaje !== undefined){
+    if(!nombre.trim()) return {ok:false,msg:'El nombre es obligatorio.'};
+    if(porcentaje !== '' && porcentaje !== null){
       const n = Number(porcentaje);
       if(Number.isNaN(n)) return {ok:false,msg:'El porcentaje debe ser un número.'};
-      if(n < 0 || n > 100) return {ok:false,msg:'El porcentaje debe estar entre 0 y 100.'};
+      if(n < 0 || n > 100) return {ok:false,msg:'Debe ser entre 0 y 100.'};
     }
     return {ok:true};
   }
@@ -134,40 +170,6 @@
     return list.some(c => c.nombre.trim().toLowerCase() === low && c.id !== excludingId);
   }
 
-  // Render listado
-  function renderListado(filter = ''){
-    const cont = byId('listado');
-    const list = loadClientes();
-    const filtered = filter.trim() === '' ? list : list.filter(c => c.nombre.toLowerCase().includes(filter.toLowerCase()));
-    if(filtered.length === 0){
-      cont.innerHTML = '<div class="small">No hay clientes registrados.</div>';
-      byId('stats').textContent = `Total: ${list.length}`;
-      return;
-    }
-
-    const rows = filtered.map(c => `
-      <tr>
-        <td style="width:8%">${c.id.slice(-6)}</td>
-        <td style="width:35%"><strong>${escapeHtml(c.nombre)}</strong><div class="small">${escapeHtml(c.condicion||'')}</div></td>
-        <td style="width:18%">${c.porcentaje !== '' && c.porcentaje !== null ? c.porcentaje + ' %' : '-'}</td>
-        <td style="width:28%">${escapeHtml(c.comentarios||'')}</td>
-        <td class="actions" style="width:11%">
-          <button class="btn ghost" onclick="onEditar('${c.id}')">Editar</button>
-          <button class="btn ghost" onclick="onEliminar('${c.id}')">Eliminar</button>
-        </td>
-      </tr>
-    `).join('');
-
-    cont.innerHTML = `
-      <table>
-        <thead><tr><th>ID</th><th>Nombre</th><th>Porcentaje</th><th>Comentarios</th><th>Acciones</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    `;
-    byId('stats').textContent = `Mostrando ${filtered.length} / Total ${list.length}`;
-  }
-
-  // Helpers
   function escapeHtml(str = '') {
     return String(str)
       .replace(/&/g, '&amp;')
@@ -175,21 +177,58 @@
       .replace(/>/g, '&gt;');
   }
 
-  // Form handling
+  function renderListado(filter = ''){
+    const cont = byId('listado');
+    const list = loadClientes();
+    const filtered = filter.trim() === '' ? list : list.filter(c => c.nombre.toLowerCase().includes(filter.toLowerCase()));
+
+    if(filtered.length === 0){
+      cont.innerHTML = '<div class="small">No hay clientes registrados.</div>';
+      byId('stats').textContent = `Total: ${list.length}`;
+      return;
+    }
+
+    cont.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Nombre</th><th>Condición</th><th>Porcentaje</th><th>Comentarios</th><th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filtered.map(c => `
+            <tr>
+              <td>${c.id.slice(-6)}</td>
+              <td><strong>${escapeHtml(c.nombre)}</strong></td>
+              <td>${escapeHtml(c.condicion || '')}</td>
+              <td>${c.porcentaje || '-'}%</td>
+              <td>${escapeHtml(c.comentarios || '')}</td>
+              <td class="actions">
+                <button class="btn ghost" onclick="onEditar('${c.id}')">Editar</button>
+                <button class="btn ghost" onclick="onEliminar('${c.id}')">Eliminar</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+
+    byId('stats').textContent = `Mostrando ${filtered.length} / Total ${list.length}`;
+  }
+
   const form = byId('form-cliente');
   const fldId = byId('clienteId');
   const fldNombre = byId('nombre');
   const fldCond = byId('condicion');
   const fldPorc = byId('porcentaje');
   const fldCom = byId('comentarios');
-  const btnGuardar = byId('btnGuardar');
-  const btnCancelar = byId('btnCancelar');
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const payload = {
       nombre: fldNombre.value.trim(),
-      condicion: fldCond.value,
+      condicion: fldCond.value.trim(),
       porcentaje: fldPorc.value === '' ? '' : Number(fldPorc.value),
       comentarios: fldCom.value.trim()
     };
@@ -197,40 +236,26 @@
     const validation = validarDatos(payload);
     if(!validation.ok){ alert(validation.msg); return; }
 
-    // Duplicate check
     if(existeNombreDuplicado(payload.nombre, fldId.value || null)){
-      alert('Ya existe un cliente con el mismo nombre.');
+      alert('Ya existe un cliente con ese nombre.');
       return;
     }
 
     if(fldId.value){
-      // editar
-      const ok = actualizarCliente(fldId.value, payload);
-      if(ok){
-        resetForm();
-        renderListado(byId('q').value);
-        alert('Cliente actualizado.');
-      } else {
-        alert('No se encontró el cliente para actualizar.');
-      }
+      actualizarCliente(fldId.value, payload);
+      alert('Cliente actualizado.');
     } else {
-      // crear
-      const nuevo = {
+      crearCliente({
         id: genId(),
         ...payload,
         createdAt: new Date().toISOString(),
         updatedAt: null
-      };
-      crearCliente(nuevo);
-      resetForm();
-      renderListado(byId('q').value);
-      alert('Cliente creado correctamente.');
+      });
+      alert('Cliente creado.');
     }
-  });
 
-  btnCancelar.addEventListener('click', (e) => {
-    e.preventDefault();
     resetForm();
+    renderListado(byId('q').value);
   });
 
   function resetForm(){
@@ -239,80 +264,67 @@
     fldCond.value = '';
     fldPorc.value = '';
     fldCom.value = '';
-    btnGuardar.textContent = 'Guardar';
+    byId('btnGuardar').textContent = 'Guardar';
   }
 
-  // Global actions (exposed for inline onclick)
   window.onEditar = function(id){
     const list = loadClientes();
     const c = list.find(x => x.id === id);
-    if(!c) { alert('Cliente no encontrado'); return; }
+    if(!c) return;
+
     fldId.value = c.id;
     fldNombre.value = c.nombre;
     fldCond.value = c.condicion || '';
-    fldPorc.value = c.porcentaje === '' || c.porcentaje === null ? '' : c.porcentaje;
+    fldPorc.value = c.porcentaje || '';
     fldCom.value = c.comentarios || '';
-    btnGuardar.textContent = 'Actualizar';
+    byId('btnGuardar').textContent = 'Actualizar';
+
     window.scrollTo({top:0,behavior:'smooth'});
   };
 
   window.onEliminar = function(id){
-    if(!confirm('Confirma eliminar este cliente?')) return;
-    borrarCliente(id);
-    renderListado(byId('q').value);
+    if(confirm('Confirmar eliminación?')){
+      borrarCliente(id);
+      renderListado(byId('q').value);
+    }
   };
 
-  // Search
   byId('btnBuscar').addEventListener('click', ()=> renderListado(byId('q').value));
-  byId('q').addEventListener('keyup', (e)=> {
-    if(e.key === 'Enter') renderListado(byId('q').value);
-  });
+  byId('q').addEventListener('keyup', (e)=> { if(e.key === 'Enter') renderListado(byId('q').value); });
   byId('btnClear').addEventListener('click', ()=> { byId('q').value=''; renderListado(''); });
 
-  // Export CSV
   byId('btnExport').addEventListener('click', ()=> {
     const list = loadClientes();
-    if(list.length === 0){ alert('No hay clientes para exportar.'); return; }
-    const hdr = ['id','nombre','condicion','porcentaje','comentarios','createdAt','updatedAt'];
-    const csv = [hdr.join(',')].concat(list.map(c => {
-      return [
-        `"${c.id}"`,
-        `"${(c.nombre||'').replace(/"/g,'""')}"`,
-        `"${(c.condicion||'').replace(/"/g,'""')}"`,
-        `"${c.porcentaje===null||c.porcentaje===''? '': c.porcentaje}"`,
-        `"${(c.comentarios||'').replace(/"/g,'""')}"`,
-        `"${c.createdAt||''}"`,
-        `"${c.updatedAt||''}"`
-      ].join(',');
-    })).join('\n');
+    if(list.length === 0){ alert('No hay datos.'); return; }
 
-    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+    const hdr = ['id','nombre','condicion','porcentaje','comentarios','createdAt','updatedAt'];
+    const csv = [hdr.join(',')]
+      .concat(list.map(c =>
+        `"${c.id}","${c.nombre}","${c.condicion||''}","${c.porcentaje||''}","${c.comentarios||''}","${c.createdAt||''}","${c.updatedAt||''}"`
+      ))
+      .join('\n');
+
+    const blob = new Blob([csv], {type:'text/csv'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'clientes_export.csv';
-    document.body.appendChild(a);
+    a.download = 'clientes.csv';
     a.click();
-    a.remove();
     URL.revokeObjectURL(url);
   });
 
-  // Seed sample data if none
-  function seedSample(){
-    const existing = loadClientes();
-    if(existing.length === 0){
-      const sample = [
-        { id: genId(), nombre: 'Farmacia Central', condicion: 'Responsable Inscripto', porcentaje: 5, comentarios:'Cuenta mayorista', createdAt: new Date().toISOString(), updatedAt: null },
-        { id: genId(), nombre: 'Distribuidora Norte', condicion: 'Monotributo', porcentaje: 8, comentarios:'Pago mensual', createdAt: new Date().toISOString(), updatedAt: null }
-      ];
-      saveClientes(sample);
+  function seed(){
+    if(loadClientes().length === 0){
+      saveClientes([
+        { id: genId(), nombre:'Farmacia Central', condicion:'Mayorista', porcentaje:5, comentarios:'Cliente ejemplo', createdAt:new Date().toISOString(), updatedAt:null }
+      ]);
     }
   }
 
-  seedSample();
+  seed();
   renderListado();
-
 })();
 </script>
+
 </body>
 </html>

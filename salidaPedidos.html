@@ -12,110 +12,144 @@
       --accent: #0ea5a1;
       --muted: #6b7280;
     }
+    body { font-family: Inter, sans-serif; margin: 0; background: var(--bg); }
     * { box-sizing: border-box; }
-    body {
-      font-family: Inter, system-ui, Arial, sans-serif;
-      margin: 0;
-      background: var(--bg);
-      color: #111;
-    }
+
+    /* HEADER + NAV ------------------------ */
     .header {
       background: var(--card);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      padding: 12px 20px;
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 12px 20px;
+      gap: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
       position: sticky;
       top: 0;
       z-index: 10;
     }
-    .brand { font-weight: 700; font-size: 18px; color: var(--accent); }
-    .nav { display: flex; gap: 8px; margin-left: auto; }
+
+    .brand {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .nav {
+      display: flex;
+      gap: 20px;
+      margin-left: auto;
+      align-items: center;
+    }
+
     .nav a {
-      padding: 8px 10px;
-      border-radius: 6px;
       text-decoration: none;
       color: #111;
+      font-size: 14px;
+      padding: 4px 6px;
     }
-    .nav a:hover { background: #eef2f2; }
-    .container { max-width: 1100px; margin: 28px auto; padding: 18px; }
-    .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-    .card {
-      background: var(--card);
-      padding: 14px;
-      border-radius: 10px;
-      box-shadow: 0 1px 2px rgba(16,24,40,0.03);
+
+    .nav a:hover {
+      background: #eef2f2;
+      border-radius: 4px;
     }
-    .small { font-size: 13px; color: var(--muted); }
+
+    .nav details {
+      position: relative;
+    }
+
+    .nav details summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: bold;
+    }
+
+    .nav details[open] summary {
+      color: var(--accent);
+    }
+
+    .nav details a {
+      display: block;
+      padding: 4px 10px;
+    }
+
+    .nav details::marker,
+    .nav summary::marker {
+      display: none;
+    }
+
+    /* MAIN ------------------------------ */
+    .container {
+      max-width: 1100px;
+      margin: 25px auto;
+      padding: 16px;
+    }
+
     .btn {
       background: var(--accent);
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
+      color: #fff;
       border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
       cursor: pointer;
+      font-size: 14px;
     }
-    .btn.ghost {
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid #e6f6f6;
+
+    .btn.delete {
+      background: #dc2626;
     }
+
     .form-row {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-bottom: 16px;
       padding: 12px;
-      border: 1px solid #e6e6e6;
-      border-radius: 8px;
       background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      margin-bottom: 16px;
     }
-    .input, textarea, select {
+
+    .input, select, textarea {
       padding: 8px;
       border-radius: 6px;
-      border: 1px solid #e6e6e6;
+      border: 1px solid #d1d5db;
     }
-    textarea.input {
-      resize: vertical;
-      min-height: 100px;
+
+    #listaPedidos {
+      margin-top: 30px;
+      background: #fff;
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
     }
-    .header-actions { display: flex; gap: 8px; align-items: center; }
-    .footer {
-      margin-top: 24px;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    table th, table td {
+      padding: 8px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 14px;
+    }
+
+    .empty {
       color: var(--muted);
-      font-size: 13px;
       text-align: center;
+      padding: 12px;
     }
-    @media (max-width:900px) {
-      .grid { grid-template-columns: 1fr; }
-      .nav { display: none; }
-    }
-    .nav {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.nav details summary {
-    cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.nav a {
-    display: block;
-    margin-left: 10px;
-    padding: 2px 0;
-}
-
   </style>
 </head>
+
 <body>
 
-  <header class="header">
-    <div class="brand">SALIDA DE PEDIDOS</div>
-    		<nav class="nav">
+<header class="header">
+  
+  <div class="brand">SALIDA DE PEDIDOS</div>
+
+  <nav class="nav">
 
     <a href="index.html" class="nav-home">Inicio</a>
 
@@ -124,8 +158,8 @@
         <a href="ingreso.html">Ingreso de pedidos</a>
         <a href="salidaPedidos.html">Salida de pedidos</a>
         <a href="envios.html">Envíos</a>
-        <a href="arqueo.html">Arqueo Caja</a>
-        <a href="index.html">Imprimir</a>
+        <a href="arqueo.html">registro de egresos</a>
+        <a href="index (5).html">Imprimir</a>
     </details>
 
     <details>
@@ -148,138 +182,132 @@
         <a href="auditoria.html">Auditoría</a>
     </details>
 
-</nav>
+  </nav>
 
-    <div class="header-actions">
-      <button id="addRow" class="btn">Agregar</button>
-      <button id="exportJson" class="btn ghost">Exportar JSON</button>
-    </div>
-  </header>
+</header>
 
-  <main class="container">
-    <div class="grid">
-      <div class="card" style="grid-column: 1 / -1;">
-        <div class="small">Tabla: <strong>SALIDA DE PEDIDOS</strong></div>
+<main class="container">
 
-        <div id="formularioPedidos"></div>
+  <h3>Cargar pedido</h3>
 
-        <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
-          <button id="guardarConfirmar" class="btn">Guardar y confirmar</button>
-        </div>
+  <div id="formularioPedidos"></div>
+
+  <button id="guardarConfirmar" class="btn">Guardar y Confirmar</button>
+
+  <div id="listaPedidos">
+    <h3>Pedidos cargados</h3>
+    <div id="tablaContainer"></div>
+  </div>
+
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const formContainer = document.getElementById("formularioPedidos");
+  const tablaContainer = document.getElementById("tablaContainer");
+  const pedidos = [];
+
+  crearFormulario();
+
+  // CREA FORMULARIO
+  function crearFormulario() {
+    formContainer.innerHTML = `
+      <div class="form-row">
+        <label>Fecha:</label>
+        <input type="date" class="input" id="fecha">
+
+        <label>N° Operación:</label>
+        <input type="text" class="input" id="operacion" placeholder="Ej: 12345">
+
+        <label>Estado:</label>
+        <select id="estado" class="input">
+          <option value="cargado" selected>Cargado</option>
+          <option value="impreso">Impreso</option>
+          <option value="cta_cte">Cta Cte</option>
+          <option value="a_cobrar">A cobrar</option>
+          <option value="cobrado">Cobrado</option>
+          <option value="envios">Envíos</option>
+          <option value="finalizado">Finalizado</option>
+        </select>
+
+        <label>Observaciones:</label>
+        <textarea class="input" id="obs" placeholder="Escribir observaciones..."></textarea>
       </div>
-    </div>
+    `;
 
-    <div class="footer">Ingreso de pedidos</div>
-  </main>
+    document.getElementById("fecha").value = new Date().toISOString().split("T")[0];
+  }
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const addBtn = document.getElementById('addRow');
-      const exportBtn = document.getElementById('exportJson');
-      const container = document.getElementById('formularioPedidos');
+  // BOTÓN GUARDAR
+  document.getElementById("guardarConfirmar").addEventListener("click", () => {
 
-      // Crear la primera fila
-      crearFilaFormulario();
+    const fecha = document.getElementById("fecha").value;
+    const operacion = document.getElementById("operacion").value;
+    const estado = document.getElementById("estado").value;
+    const obs = document.getElementById("obs").value;
 
-      addBtn.addEventListener('click', () => {
-        const div = document.createElement('div');
-        div.className = 'form-row';
-        div.innerHTML = `
-          <label>Fecha</label>
-          <input class="input fecha-input" type="date" name="fecha">
+    if (!operacion.trim()) {
+      alert("Debe ingresar un número de operación.");
+      return;
+    }
 
-          <label>N° Operación</label>
-          <input class="input" type="text" name="nroOperacion" placeholder="Ej: 12345">
+    const pedido = { fecha, operacion, estado, obs };
+    pedidos.push(pedido);
 
-          <label>Canales</label>
-          <input class="input" type="text" name="canales" placeholder="Ej: Canal Online">
+    alert("Pedido cargado correctamente.");
 
-          <label>Observaciones</label>
-          <textarea class="input" name="observaciones" rows="4" placeholder="Escribir observaciones..."></textarea>
-        `;
+    actualizarTabla();
+    crearFormulario(); // Limpia formulario
+  });
 
-        container.appendChild(div);
+  // ACTUALIZA TABLA
+  function actualizarTabla() {
+    if (pedidos.length === 0) {
+      tablaContainer.innerHTML = `<div class="empty">No hay pedidos cargados.</div>`;
+      return;
+    }
 
-        // Colocar fecha actual
-        const hoy = new Date().toISOString().split('T')[0];
-        div.querySelector('.fecha-input').value = hoy;
-      });
+    let html = `
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>N° Operación</th>
+            <th>Estado</th>
+            <th>Obs.</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
 
-      const guardarBtn = document.getElementById('guardarConfirmar');
-
-      guardarBtn.addEventListener('click', () => {
-        const rows = Array.from(document.querySelectorAll('#formularioPedidos .form-row'));
-        const data = rows.map(r => {
-          return {
-            fecha: r.querySelector('input[name="fecha"]')?.value || '',
-            nroOperacion: r.querySelector('input[name="nroOperacion"]')?.value || '',
-            canales: r.querySelector('input[name="canales"]')?.value || '',
-            observaciones: r.querySelector('textarea[name="observaciones"]')?.value || ''
-          };
-        });
-
-        alert('Pedido guardado correctamente:\n\n' + JSON.stringify(data[data.length - 1], null, 2));
-        crearFilaFormulario();
-      });
-
-      function crearFilaFormulario() {
-        const div = document.createElement('div');
-        div.className = 'form-row';
-        div.innerHTML = `
-          <label>Fecha</label>
-          <input class="input fecha-input" type="date" name="fecha">
-
-          <label>N° Operación</label>
-          <input class="input" type="text" name="nroOperacion" placeholder="Ej: 12345">
-
-          <div class="form-row">
-            <label class="small">Estado:</label>
-            <select name="estado" class="input">
-              <option value="">Seleccione estado</option>
-              <option value="cargado">Cargado</option>
-              <option value="impreso">Impreso</option>
-              <option value="cta_cte">Cta Cte</option>
-              <option value="a_cobrar">A cobrar</option>
-              <option value="cobrado">Cobrado</option>
-              <option value="envios">Envíos</option>
-              <option value="finalizado">Finalizado</option>
-            </select>
-          </div>
-
-          <label>Observaciones</label>
-          <textarea class="input" name="observaciones" rows="4" placeholder="Escribir observaciones..."></textarea>
-        `;
-
-        document.getElementById('formularioPedidos').appendChild(div);
-
-        // Fecha del día
-        const hoy = new Date().toISOString().split('T')[0];
-        div.querySelector('.fecha-input').value = hoy;
-      }
-
-      exportBtn.addEventListener('click', () => {
-        const rows = Array.from(container.querySelectorAll('.form-row'));
-        const data = rows.map(r => {
-          return {
-            fecha: r.querySelector('input[name="fecha"]')?.value || '',
-            nroOperacion: r.querySelector('input[name="nroOperacion"]')?.value || '',
-            canales: r.querySelector('input[name="canales"]')?.value || '',
-            observaciones: r.querySelector('textarea[name="observaciones"]')?.value || ''
-          };
-        });
-
-        const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'salida_pedidos.json';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      });
+    pedidos.forEach((p, index) => {
+      html += `
+        <tr>
+          <td>${p.fecha}</td>
+          <td>${p.operacion}</td>
+          <td>${p.estado}</td>
+          <td>${p.obs}</td>
+          <td><button class="btn delete" onclick="eliminarPedido(${index})">Eliminar</button></td>
+        </tr>
+      `;
     });
-  </script>
+
+    html += "</tbody></table>";
+
+    tablaContainer.innerHTML = html;
+  }
+
+  // Eliminar pedido
+  window.eliminarPedido = function(idx) {
+    pedidos.splice(idx, 1);
+    actualizarTabla();
+  };
+
+  actualizarTabla();
+});
+</script>
 
 </body>
 </html>

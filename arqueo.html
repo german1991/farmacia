@@ -1,21 +1,23 @@
 <!doctype html>
 <html lang="es">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Arqueo de Caja - Farmacia</title>
-<link rel="stylesheet" href="styles.css"></head>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Registro de egresos - Farmacia</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
 <body>
 
-		<nav class="nav">
-
-    <a href="index (5).html" class="nav-home">Inicio</a>
+<nav class="nav">
+    <a href="index.html" class="nav-home">Inicio</a>
 
     <details>
-        <summary>Trabajo</summary>
+        <summary>Ventas</summary>
         <a href="ingreso.html">Ingreso de pedidos</a>
-        <a href="salidaPedidos.html">Salida de pedidos</a>
         <a href="envios.html">Envíos</a>
-        <a href="arqueo.html">Arqueo Caja</a>
-        <a href="index.html">Imprimir</a>
+        <a href="arqueo.html">Registro de egresos</a>
+        <a href="#" onclick="imprimirArqueo()">Imprimir</a>
     </details>
 
     <details>
@@ -23,6 +25,7 @@
         <a href="planCuentas.html">Plan de cuentas</a>
         <a href="cuentaCorriente.html">Cuenta corriente</a>
         <a href="reportesClientes.html">Reporte clientes</a>
+        <a href="salidaPedidos.html">Salida de pedidos</a>
         <a href="cuentas.html">Alta de clientes</a>
     </details>
 
@@ -37,67 +40,79 @@
         <a href="configuracion.html">Configuración</a>
         <a href="auditoria.html">Auditoría</a>
     </details>
-
 </nav>
 
 <main class="container">
-  <div class="card">
-    <h3>Arqueo de Caja </h3>
-    <div class="small"></div>
-    <form id="form-arqueo">
-      <div class="form-row">
-        <input class="input" type="date" name="fecha" id="fecha">
+    <div class="card">
+        <h3>Registro de pagos</h3>
 
-        
-        <div class="form-row">
-          <label class="small" for="canal">Canal:</label>
-          <select name="canal" id="canal" class="input">
-            <option value="">Seleccione un canal</option>
-            <option value="tc">tc</option>
-            <option value="td">Td</option>
-            <option value="efectivo">Efectivo</option>
-            <option value="bc1">bc1</option>
-            <option value="bc2">bc2</option>
-            <option value="mp1">mp1</option>
-            <option value="mp2">mp2</option>
-            <option value="usd">usd</option>
-            <option value="cheque">Cheque</option>
-            <option value="ctaCte">cta cte</option>
-            
-          </select>
-        </div>
-        
-        <input class="input" name="items" placeholder="Concepto">
-        <input class="input" name="items" placeholder="Observaciones">
-      </div>
-      <div>
-        <button class="btn" type="submit">Generar Arqueo</button>
-      </div>
-    </form>
-    <div style="margin-top:12px" id="res-arqueo"></div>
-  </div>
+        <form id="form-arqueo">
+            <div class="form-row">
+                <input class="input" type="date" name="fecha" id="fecha">
 
-  <div class="footer"></div>
+                <div class="form-row">
+                    <label class="small" for="canal">Canal:</label>
+                    <select name="canal" id="canal" class="input">
+                        <option value="">Seleccione un canal</option>
+                        <option value="tc">TC</option>
+                        <option value="td">TD</option>
+                        <option value="efectivo">Efectivo</option>
+                        <option value="bc1">BC1</option>
+                        <option value="bc2">BC2</option>
+                        <option value="mp1">MP1</option>
+                        <option value="mp2">MP2</option>
+                        <option value="usd">USD</option>
+                        <option value="cheque">Cheque</option>
+                        <option value="ctaCte">Cuenta Corriente</option>
+                    </select>
+                </div>
+
+                <input class="input" id="concepto" placeholder="Concepto">
+                <input class="input" id="observaciones" placeholder="Observaciones">
+            </div>
+
+            <div>
+                <button class="btn" type="submit">Generar Registro</button>
+                <button class="btn" type="button" onclick="imprimirArqueo()">Imprimir</button>
+            </div>
+        </form>
+
+        <div style="margin-top:12px" id="res-arqueo"></div>
+    </div>
+
+    <div class="footer"></div>
 </main>
 
-<script src="app.js"></script>
 <script>
-  document.getElementById('form-arqueo').addEventListener('submit', (e)=>{
+document.getElementById('form-arqueo').addEventListener('submit', function(e) {
     e.preventDefault();
-    const ventas = parseFloat(e.target.ventas.value) || 0;
-    const efectivo = parseFloat(e.target.efectivo.value) || 0;
-    const diferencia = efectivo - ventas;
-    document.getElementById('res-arqueo').innerHTML = `<div class="small">Ventas: ${ventas.toFixed(2)} ARS<br>Efectivo: ${efectivo.toFixed(2)} ARS<br>Diferencia: ${diferencia.toFixed(2)} ARS</div>`;
-  });
 
-  // Setea la fecha actual en formato YYYY-MM-DD
-  const hoy = new Date().toISOString().split('T')[0];
-  document.getElementById("fecha").value = hoy;
+    const fecha = document.getElementById("fecha").value;
+    const canal = document.getElementById("canal").value || "-";
+    const concepto = document.getElementById("concepto").value || "-";
+    const observaciones = document.getElementById("observaciones").value || "-";
 
+    document.getElementById('res-arqueo').innerHTML = `
+        <div class="print-area">
+            <h4>Registro de Egresos</h4>
+            <p><strong>Fecha:</strong> ${fecha}</p>
+            <p><strong>Canal:</strong> ${canal}</p>
+            <p><strong>Concepto:</strong> ${concepto}</p>
+            <p><strong>Observaciones:</strong> ${observaciones}</p>
+        </div>
+    `;
+});
+
+function imprimirArqueo() {
+    window.print();
+}
+
+// Setea la fecha actual
+const hoy = new Date().toISOString().split('T')[0];
+document.getElementById("fecha").value = hoy;
 </script>
-</body>
+
 <style>
-  
 .nav {
     display: flex;
     gap: 20px;
@@ -107,7 +122,6 @@
 .nav details summary {
     cursor: pointer;
     font-weight: bold;
-    margin-bottom: 5px;
 }
 
 .nav a {
@@ -116,6 +130,23 @@
     padding: 2px 0;
 }
 
+/* Estilos de impresión */
+@media print {
+    .nav, button {
+        display: none;
+    }
 
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .print-area {
+        border: 1px solid #000;
+        padding: 20px;
+        width: 100%;
+    }
+}
 </style>
+
+</body>
 </html>

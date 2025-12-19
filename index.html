@@ -2,13 +2,6 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-    <script>
-      if (localStorage.getItem("logged") !== "true") {
-        window.location.href = "login.html";
-      }
-</script>
-
-
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Bienvenida - Farmacia</title>
   <link rel="stylesheet" href="styles.css">
@@ -106,18 +99,16 @@
   </style>
 </head>
 <body>
-   <a href="#" onclick="logout()">Cerrar sesión</a>
 
   <header class="header">
    <nav class="nav">
     <a href="index.html" class="nav-home">Inicio</a>
     <details>
-        <summary>Trabajo</summary>
+        <summary>Ventas</summary>
         <a href="ingreso.html">Ingreso de pedidos</a>
-        <a href="salidaPedidos.html">Salida de pedidos</a>
         <a href="envios.html">Envíos</a>
-        <a href="arqueo.html">Arqueo Caja</a>
-        
+        <a href="arqueo.html">registro de egresos</a>
+        <a href="index (5).html">Imprimir</a>
     </details>
 
     <details>
@@ -125,6 +116,7 @@
         <a href="planCuentas.html">Plan de cuentas</a>
         <a href="cuentaCorriente.html">Cuenta corriente</a>
         <a href="reportesClientes.html">Reporte clientes</a>
+        <a href="salidaPedidos.html">Salida de pedidos</a>
         <a href="cuentas.html">Alta de clientes</a>
     </details>
 
@@ -132,6 +124,7 @@
         <summary>Gerencia</summary>
         <a href="reportes.html">Reportes</a>
         <a href="usuarios.html">Usuarios y permisos</a>
+        <a href="arqueoCaja.html">Arqueo caja</a>
     </details>
 
     <details>
@@ -152,15 +145,6 @@
     </div>
     <div class="footer">Farmacia - Demo</div>
   </main>
-    <script>
-    function logout() {
-      // Borra la sesión
-      localStorage.removeItem("logged");
-
-      // Redirige al login
-      window.location.href = "login.html";
-    }
-  </script>
 
 </body>
 </html>

@@ -23,7 +23,6 @@
       padding: 0;
     }
 
-    /* HEADER + NAV */
     .header {
       background: var(--card);
       box-shadow: 0 1px 3px rgba(0,0,0,0.06);
@@ -49,7 +48,6 @@
     }
     .nav a:hover { background: #eef2f2; border-radius: 4px; }
 
-    /* CUERPO DE LA PÁGINA */
     .container{max-width:900px;margin:auto;padding:20px;}
     .card{background:white;padding:20px;border-radius:8px;margin-bottom:20px;}
     input,select,textarea{
@@ -74,43 +72,12 @@
 
 <body>
 
-<!-- NAV SUPERIOR -->
 <header class="header">
   <nav class="nav">
     <a href="index.html" class="nav-home">Inicio</a>
-
-    <details>
-      <summary>Trabajo</summary>
-      <a href="ingreso.html">Ingreso de pedidos</a>
-      <a href="salidaPedidos.html">Salida de pedidos</a>
-      <a href="envios.html">Envíos</a>
-      <a href="arqueo.html">registro de egresos</a>
-      <a href="index.html">Imprimir</a>
-    </details>
-
-    <details>
-      <summary>Administración</summary>
-      <a href="planCuentas.html">Plan de cuentas</a>
-      <a href="cuentaCorriente.html">Cuenta corriente</a>
-      <a href="reportesClientes.html">Reporte clientes</a>
-      <a href="cuentas.html">Alta de clientes</a>
-    </details>
-
-    <details>
-      <summary>Gerencia</summary>
-      <a href="reportes.html">Reportes</a>
-      <a href="usuarios.html">Usuarios y permisos</a>
-    </details>
-
-    <details>
-      <summary>Sistema</summary>
-      <a href="configuracion.html">Configuración</a>
-      <a href="auditoria.html">Auditoría</a>
-    </details>
   </nav>
 </header>
 
-<!-- CONTENIDO -->
 <div class="container">
 
 <div class="card">
@@ -125,7 +92,7 @@
 <input type="date" id="fecha" readonly>
 
 <label>DR/DRa que receta (Cliente):</label>
-<input type="text" id="cliente">
+<input type="text" id="cliente" required>
 
 <label>Nombre del paciente:</label>
 <input type="text" id="paciente">
@@ -155,7 +122,6 @@
 <input type="file" accept="image/*" id="fotoPago">
 
 <button class="btn" type="submit">Cargar</button>
-<a href="index (5).html" class="btn ghost">Volver</a>
 
 </form>
 </div>
@@ -168,12 +134,17 @@
 </div>
 
 <script>
-// --- inicialización datos ---
-document.getElementById("fecha").value = new Date().toISOString().split('T')[0];
+
+// --- Inicialización ---
+function fechaHoy(){
+  return new Date().toISOString().split('T')[0];
+}
+
+document.getElementById("fecha").value = fechaHoy();
+
 let op = parseInt(localStorage.getItem("op") ?? 1);
 document.getElementById("nroOperacion").value = op;
 
-// Obtener pedidos existentes
 let pedidos = JSON.parse(localStorage.getItem("pedidos") || "[]");
 render();
 
@@ -181,10 +152,24 @@ render();
 document.getElementById("form-ingreso").addEventListener("submit", e=>{
     e.preventDefault();
 
+    let clienteInput = document.getElementById("cliente").value.trim().toUpperCase();
+
+    // Validación obligatoria
+    if(clienteInput === ""){
+        alert("Debe ingresar DR o DRA que receta.");
+        return;
+    }
+
+    // Validar que empiece con DR o DRA
+    if(!(clienteInput.startsWith("DR ") || clienteInput.startsWith("DRA "))){
+        alert("El nombre debe comenzar con DR o DRA.");
+        return;
+    }
+
     let pedido = {
         id: op,
         fecha: document.getElementById("fecha").value,
-        cliente: document.getElementById("cliente").value,
+        cliente: clienteInput,
         paciente: document.getElementById("paciente").value,
         rp: document.getElementById("rp").value,
         detalles: document.getElementById("detalles").value,
@@ -196,13 +181,15 @@ document.getElementById("form-ingreso").addEventListener("submit", e=>{
     localStorage.setItem("pedidos",JSON.stringify(pedidos));
 
     alert("Pedido cargado correctamente");
-    
+
     op++;
     localStorage.setItem("op",op);
     document.getElementById("nroOperacion").value = op;
 
     render();
+
     e.target.reset();
+    document.getElementById("fecha").value = fechaHoy();
 });
 
 // --- Mostrar pedidos ---
@@ -244,6 +231,7 @@ function eliminar(i){
         render();
     }
 }
+
 </script>
 
 </body>

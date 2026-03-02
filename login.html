@@ -84,20 +84,27 @@
     <div id="error" class="error">Usuario o contraseña incorrectos</div>
   </div>
 
-  <script>
-    function login() {
-      const user = document.getElementById("user").value;
-      const pass = document.getElementById("pass").value;
+<script>
+  function login() {
+    const user = document.getElementById("user").value;
+    const pass = document.getElementById("pass").value;
 
-      if (user === "admin" && pass === "admin") {
-        localStorage.setItem("logged", "true");
-        window.location.href = "index.html";
-
-      } else {
-        document.getElementById("error").style.display = "block";
-      }
+    if (user === "admin" && pass === "admin") {
+      localStorage.setItem("rol", "admin");
+      window.location.href = "index.html";
+    } 
+    else if (user === "ventas" && pass === "ventas") {
+      localStorage.setItem("rol", "ventas");
+      window.location.href = "index.html";
     }
-  </script>
-
+    else if (user === "supervisor" && pass === "supervisor") {
+      localStorage.setItem("rol", "supervisor");
+      window.location.href = "index.html";
+    }
+    else {
+      document.getElementById("error").style.display = "block";
+    }
+  }
+</script>
 </body>
 </html>

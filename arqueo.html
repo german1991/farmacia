@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Registro de egresos - Farmacia</title>
+<title>Registro de pagos - Farmacia</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -14,10 +14,10 @@
 
     <details>
         <summary>Ventas</summary>
-        <a href="ingreso.html">Ingreso de pedidos</a>
+        <a href="ingreso.html">Ingreso de ventas </a>
         <a href="envios.html">Envíos</a>
-        <a href="arqueo.html">Registro de egresos</a>
         
+        <a href="#" onclick="imprimirArqueo()">Imprimir</a>
     </details>
 
     <details>
@@ -25,8 +25,9 @@
         <a href="planCuentas.html">Plan de cuentas</a>
         <a href="cuentaCorriente.html">Cuenta corriente</a>
         <a href="reportesClientes.html">Reporte clientes</a>
-        <a href="salidaPedidos.html">Salida de pedidos</a>
+        <a href="salidaPedidos.html">Baja final de ventas</a>
         <a href="cuentas.html">Alta de clientes</a>
+        <a href="arqueo.html">Registro de egresos</a>
     </details>
 
     <details>
@@ -94,7 +95,7 @@ document.getElementById('form-arqueo').addEventListener('submit', function(e) {
 
     document.getElementById('res-arqueo').innerHTML = `
         <div class="print-area">
-            <h4>Registro de Egresos</h4>
+            <h4>Registro de pagos</h4>
             <p><strong>Fecha:</strong> ${fecha}</p>
             <p><strong>Canal:</strong> ${canal}</p>
             <p><strong>Concepto:</strong> ${concepto}</p>
@@ -111,7 +112,13 @@ function imprimirArqueo() {
 const hoy = new Date().toISOString().split('T')[0];
 document.getElementById("fecha").value = hoy;
 </script>
+<script>
+  const rol = localStorage.getItem("rol");
 
+  if (!rol || (rol !== "admin" && rol !== "supervisor" && rol !== "ventas")) {
+    window.location.href = "login.html";
+  }
+</script>
 <style>
 .nav {
     display: flex;
@@ -146,6 +153,7 @@ document.getElementById("fecha").value = hoy;
         width: 100%;
     }
 }
+
 </style>
 
 </body>

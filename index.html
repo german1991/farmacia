@@ -117,17 +117,17 @@
       <a href="reportesClientes.html">Reporte clientes</a>
       <a href="salidaPedidos.html">Baja final de ventas</a>
       <a href="cuentas.html">Alta de clientes</a>
-      <a href="arqueo.html">Registro de egresos</a>
+      <a href="arqueo.html">Registro de pagos</a>
     </details>
 
-    <details>
+    <details id="menuGerencia">
         <summary>Gerencia</summary>
         <a href="reportes.html">Reportes</a>
         <a href="usuarios.html">Usuarios y permisos</a>
         <a href="arqueoCaja.html">Arqueo caja</a>
     </details>
 
-    <details>
+    <details id="menuSistema">
         <summary>Sistema</summary>
         <a href="configuracion.html">Configuración</a>
         <a href="auditoria.html">Auditoría</a>
@@ -148,21 +148,23 @@
 <script>
   const rol = localStorage.getItem("rol");
 
-  if (!rol) {
-    window.location.href = "login.html";
-  }
+if (!rol) {
+  window.location.href = "login.html";
+}
 
-  if (rol === "ventas") {
-    document.getElementById("menuAdmin").style.display = "none";
-  }
+// 👁 Control visual por rol
+if (rol === "ventas") {
+  document.getElementById("menuAdmin")?.remove();
+  document.getElementById("menuGerencia")?.remove();
+  document.getElementById("menuSistema")?.remove();
+}
 
-  if (rol === "supervisor") {
-    // ve ventas y administración
-  }
+if (rol === "supervisor") {
+  document.getElementById("menuGerencia")?.remove();
+  document.getElementById("menuSistema")?.remove();
+}
 
-  if (rol === "admin") {
-    // ve todo
-  }
+// admin ve todo
 </script>
 
 <script src="main.js"></script>

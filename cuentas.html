@@ -325,6 +325,12 @@
   renderListado();
 })();
 </script>
+<script>
+const rol = localStorage.getItem("rol");
 
+if (!rol || (rol !== "supervisor" && rol !== "admin")) {
+  window.location.href = "index.html";
+}
+</script>
 </body>
 </html>

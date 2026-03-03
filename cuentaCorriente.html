@@ -75,13 +75,13 @@
 <body>
 		<nav class="nav">
 
-    <a href="index (5).html" class="nav-home">Inicio</a>
+    <a href="index.html" class="nav-home">Inicio</a>
 
     <details>
         <summary>Ventas</summary>
-        <a href="ingreso.html">Ingreso de pedidos</a>
+        <a href="ingreso.html">Ingreso de ventas </a>
         <a href="envios.html">Envíos</a>
-        <a href="arqueo.html">registro de egresos</a>
+        
         
     </details>
 
@@ -90,8 +90,9 @@
         <a href="planCuentas.html">Plan de cuentas</a>
         <a href="cuentaCorriente.html">Cuenta corriente</a>
         <a href="reportesClientes.html">Reporte clientes</a>
-        <a href="salidaPedidos.html">Salida de pedidos</a>
+        <a href="salidaPedidos.html">Baja final de ventas</a>
         <a href="cuentas.html">Alta de clientes</a>
+        <a href="arqueo.html">Registro de egresos</a>
     </details>
 
     <details>
@@ -138,56 +139,41 @@
 </div>
 
 <script>
-  // Datos de ejemplo — los podés cambiar por datos reales o cargar desde JSON
-  const datos = [
-    {
-      cliente: "SOBARZO MARTIN",
-      operacion: "172479",
-      ingreso: 123000,
-      egreso: 0,
-      obs: ""
-    },
-    {
-      cliente: "CABRERA ROMINA",
-      operacion: "172469",
-      ingreso: 41000,
-      egreso: 0,
-      obs: "BCO"
-    },
-    {
-      cliente: "MONTANIEL EUGENIA",
-      operacion: "172505",
-      ingreso: 157500,
-      egreso: 0,
-      obs: "EFVO"
-    }
-  ];
-
-  function cargarTabla(filtro = "") {
+  async function cargarTabla(filtro = "") {
     const tbody = document.getElementById("bodyTabla");
     tbody.innerHTML = "";
 
-    datos
-      .filter(d => d.cliente.toLowerCase().includes(filtro.toLowerCase()))
-      .forEach(reg => {
-        const saldo = reg.ingreso - reg.egreso;
-        const estado = saldo > 0 ? "A COBRAR" :
-                       saldo < 0 ? "A PAGAR" : "OK";
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/cuenta-corriente?search=${filtro}`
+      );
+      const datos = await res.json();
+
+      datos.forEach(reg => {
+        const estado =
+          reg.saldo > 0 ? "A COBRAR" :
+          reg.saldo < 0 ? "A PAGAR" :
+          "OK";
 
         tbody.innerHTML += `
           <tr>
             <td>${reg.cliente}</td>
             <td>${reg.operacion}</td>
-            <td>$${reg.ingreso.toLocaleString()}</td>
-            <td>$${reg.egreso.toLocaleString()}</td>
-            <td class="${saldo >= 0 ? 'saldo-positivo' : 'saldo-negativo'}">
-              $${saldo.toLocaleString()}
+            <td>$${Number(reg.ingreso).toLocaleString()}</td>
+            <td>$${Number(reg.egreso).toLocaleString()}</td>
+            <td class="${reg.saldo >= 0 ? 'saldo-positivo' : 'saldo-negativo'}">
+              $${Number(reg.saldo).toLocaleString()}
             </td>
             <td>${estado}</td>
             <td>${reg.obs || "-"}</td>
           </tr>
         `;
       });
+
+    } catch (error) {
+      console.error(error);
+      tbody.innerHTML = `<tr><td colspan="7">Error al cargar datos</td></tr>`;
+    }
   }
 
   cargarTabla();
@@ -196,6 +182,7 @@
     cargarTabla(e.target.value);
   });
 </script>
+
 
 </body>
 </html>

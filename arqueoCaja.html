@@ -158,6 +158,19 @@ document.getElementById('hasta').value = hoy;
     }
 }
 </style>
+<script>
+const rol = localStorage.getItem("rol");
+
+// 🔒 Si no está logueado → login
+if (!rol) {
+  window.location.href = "login.html";
+}
+
+// 🔒 Solo puede entrar gerencia o admin
+if (rol !== "admin" && rol !== "gerencia") {
+  window.location.href = "index.html";
+}
+</script>
 
 </body>
 </html>

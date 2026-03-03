@@ -92,7 +92,7 @@
         <a href="reportesClientes.html">Reporte clientes</a>
         <a href="salidaPedidos.html">Baja final de ventas</a>
         <a href="cuentas.html">Alta de clientes</a>
-        <a href="arqueo.html">Registro de egresos</a>
+        <a href="arqueo.html">Registro de pagos</a>
     </details>
 
     <details>
@@ -182,7 +182,13 @@
     cargarTabla(e.target.value);
   });
 </script>
+<script>
+const rol = localStorage.getItem("rol");
 
+if (!rol || (rol !== "supervisor" && rol !== "admin")) {
+  window.location.href = "index.html";
+}
+</script>
 
 </body>
 </html>

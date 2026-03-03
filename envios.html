@@ -14,11 +14,10 @@
     <a href="index.html" class="nav-home">Inicio</a>
 
     <details>
-        <summary>Trabajo</summary>
-        <a href="ingreso.html">Ingreso de pedidos</a>
-        <a href="salidaPedidos.html">Salida de pedidos</a>
+        <summary>Ventas</summary>
+        <a href="ingreso.html">Ingreso de ventas </a>
         <a href="envios.html">Envíos</a>
-        <a href="arqueo.html">Arqueo Caja</a>
+        
         
     </details>
 
@@ -27,7 +26,9 @@
         <a href="planCuentas.html">Plan de cuentas</a>
         <a href="cuentaCorriente.html">Cuenta corriente</a>
         <a href="reportesClientes.html">Reporte clientes</a>
+        <a href="salidaPedidos.html">Baja final de ventas</a>
         <a href="cuentas.html">Alta de clientes</a>
+        <a href="arqueo.html">Registro de egresos</a>
     </details>
 
     <details>
@@ -172,7 +173,13 @@ document.getElementById('fecha').value = new Date().toISOString().split("T")[0];
 
 renderEnvios();
 </script>
+<script>
+  const rol = localStorage.getItem("rol");
 
+  if (!rol || (rol !== "admin" && rol !== "supervisor" && rol !== "ventas")) {
+    window.location.href = "login.html";
+  }
+</script>
 
 <style>
   .nav {
@@ -192,6 +199,7 @@ renderEnvios();
     margin-left: 10px;
     padding: 2px 0;
 }
+
 
 </style>
 

@@ -9,20 +9,6 @@
 
 <body>
 
-<script>
-  const rol = localStorage.getItem("rol");
-
-  // Si no hay sesión → login
-  if (!rol) {
-    window.location.href = "login.html";
-  }
-
-  // Esta página permite: admin, supervisor y ventas
-  if (rol !== "admin" && rol !== "supervisor" && rol !== "ventas") {
-    window.location.href = "index.html";
-  }
-</script>
-
 <nav class="nav">
     <a href="index.html" class="nav-home">Inicio</a>
 
@@ -30,6 +16,7 @@
         <summary>Ventas</summary>
         <a href="ingreso.html">Ingreso de ventas </a>
         <a href="envios.html">Envíos</a>
+        
         <a href="#" onclick="imprimirArqueo()">Imprimir</a>
     </details>
 
@@ -125,7 +112,13 @@ function imprimirArqueo() {
 const hoy = new Date().toISOString().split('T')[0];
 document.getElementById("fecha").value = hoy;
 </script>
+<script>
+  const rol = localStorage.getItem("rol");
 
+  if (!rol || (rol !== "admin" && rol !== "supervisor" && rol !== "ventas")) {
+    window.location.href = "login.html";
+  }
+</script>
 <style>
 .nav {
     display: flex;
@@ -144,6 +137,7 @@ document.getElementById("fecha").value = hoy;
     padding: 2px 0;
 }
 
+/* Estilos de impresión */
 @media print {
     .nav, button {
         display: none;
@@ -159,6 +153,7 @@ document.getElementById("fecha").value = hoy;
         width: 100%;
     }
 }
+
 </style>
 
 </body>

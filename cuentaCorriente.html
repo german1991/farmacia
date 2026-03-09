@@ -1,193 +1,237 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reporte de Clientes</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reporte de Clientes</title>
 
-  <style>
-    body {
-      font-family: Inter, Arial, sans-serif;
-      margin: 0;
-      background: #f6f7fb;
-    }
-    header {
-      background: white;
-      padding: 15px 20px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      display: flex;
-      justify-content: space-between;
-    }
-    .brand { font-weight: 700; color: #0ea5a1; font-size: 18px; }
-    .container {
-      max-width: 1100px;
-      margin: 25px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-    }
-    input {
-      padding: 8px;
-      width: 100%;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-      font-size: 14px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background: #e9f6f6;
-      font-weight: bold;
-    }
-    .saldo-positivo { color: green; font-weight: 700; }
-    .saldo-negativo { color: red; font-weight: 700; }
-    .nav {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+<style>
+body {
+font-family: Inter, Arial, sans-serif;
+margin: 0;
+background: #f6f7fb;
+}
+
+header {
+background: white;
+padding: 15px 20px;
+box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+display: flex;
+justify-content: space-between;
+}
+
+.brand {
+font-weight: 700;
+color: #0ea5a1;
+font-size: 18px;
+}
+
+.container {
+max-width: 1100px;
+margin: 25px auto;
+background: white;
+padding: 20px;
+border-radius: 12px;
+box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+}
+
+input {
+padding: 8px;
+width: 100%;
+border-radius: 6px;
+border: 1px solid #ccc;
+margin-bottom: 15px;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 15px;
+font-size: 14px;
+}
+
+th, td {
+border: 1px solid #ddd;
+padding: 8px;
+text-align: left;
+}
+
+th {
+background: #e9f6f6;
+font-weight: bold;
+}
+
+.saldo-positivo { color: green; font-weight: 700; }
+.saldo-negativo { color: red; font-weight: 700; }
+
+.nav {
+display: flex;
+gap: 20px;
+margin-bottom: 20px;
 }
 
 .nav details summary {
-    cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 5px;
+cursor: pointer;
+font-weight: bold;
+margin-bottom: 5px;
 }
 
 .nav a {
-    display: block;
-    margin-left: 10px;
-    padding: 2px 0;
+display: block;
+margin-left: 10px;
+padding: 2px 0;
 }
 
-  </style>
+.btn {
+background: #0ea5a1;
+color: white;
+border: none;
+padding: 6px 12px;
+border-radius: 6px;
+cursor: pointer;
+}
+
+</style>
 </head>
 
 <body>
-		<nav class="nav">
 
-    <a href="index.html" class="nav-home">Inicio</a>
+<nav class="nav">
 
-    <details>
-        <summary>Ventas</summary>
-        <a href="ingreso.html">Ingreso de ventas </a>
-        <a href="envios.html">Envíos</a>
-        
-        
-    </details>
+<a href="index.html" class="nav-home">Inicio</a>
 
-    <details>
-        <summary>Administración</summary>
-        <a href="planCuentas.html">Plan de cuentas</a>
-        <a href="cuentaCorriente.html">Cuenta corriente</a>
-        <a href="reportesClientes.html">Reporte clientes</a>
-        <a href="salidaPedidos.html">Baja final de ventas</a>
-        <a href="cuentas.html">Alta de clientes</a>
-        <a href="arqueo.html">Registro de pagos</a>
-    </details>
+<details>
+<summary>Ventas</summary>
+<a href="ingreso.html">Ingreso de ventas</a>
+<a href="envios.html">Envíos</a>
+</details>
 
-    <details>
-        <summary>Gerencia</summary>
-        <a href="reportes.html">Reportes</a>
-        <a href="usuarios.html">Usuarios y permisos</a>
-    </details>
+<details>
+<summary>Administración</summary>
+<a href="planCuentas.html">Plan de cuentas</a>
+<a href="cuentaCorriente.html">Cuenta corriente</a>
+<a href="reportesClientes.html">Reporte clientes</a>
+<a href="salidaPedidos.html">Baja final de ventas</a>
+<a href="cuentas.html">Alta de clientes</a>
+<a href="arqueo.html">Registro de pagos</a>
+</details>
 
-    <details>
-        <summary>Sistema</summary>
-        <a href="configuracion.html">Configuración</a>
-        <a href="auditoria.html">Auditoría</a>
-    </details>
+<details>
+<summary>Gerencia</summary>
+<a href="reportes.html">Reportes</a>
+<a href="usuarios.html">Usuarios y permisos</a>
+</details>
+
+<details>
+<summary>Sistema</summary>
+<a href="configuracion.html">Configuración</a>
+<a href="auditoria.html">Auditoría</a>
+</details>
+
+<button onclick="logout()" class="btn">Salir</button>
 
 </nav>
 
 <header>
-  <div class="brand">Reporte de Clientes</div>
+<div class="brand">Reporte de Clientes</div>
 </header>
 
 <div class="container">
 
-  <h3>Buscar cliente</h3>
-  <input type="text" id="search" placeholder="Buscar por nombre o apellido...">
+<h3>Buscar cliente</h3>
+<input type="text" id="search" placeholder="Buscar por nombre o apellido...">
 
-  <table id="tablaClientes">
-    <thead>
-      <tr>
-        <th>Cliente</th>
-        <th>Nº Operación</th>
-        <th>Ingreso</th>
-        <th>Egreso</th>
-        <th>Saldo</th>
-        <th>Resultado</th>
-        <th>Observaciones</th>
-      </tr>
-    </thead>
+<table id="tablaClientes">
 
-    <tbody id="bodyTabla">
-      <!-- Cargado por JS -->
-    </tbody>
-  </table>
+<thead>
+<tr>
+<th>Cliente</th>
+<th>Nº Operación</th>
+<th>Ingreso</th>
+<th>Egreso</th>
+<th>Saldo</th>
+<th>Resultado</th>
+<th>Observaciones</th>
+</tr>
+</thead>
+
+<tbody id="bodyTabla">
+</tbody>
+
+</table>
 
 </div>
 
 <script>
-  async function cargarTabla(filtro = "") {
-    const tbody = document.getElementById("bodyTabla");
-    tbody.innerHTML = "";
 
-    try {
-      const res = await fetch(
-        `http://localhost:3000/api/cuenta-corriente?search=${filtro}`
-      );
-      const datos = await res.json();
+async function cargarTabla(filtro = "") {
 
-      datos.forEach(reg => {
-        const estado =
-          reg.saldo > 0 ? "A COBRAR" :
-          reg.saldo < 0 ? "A PAGAR" :
-          "OK";
+const tbody = document.getElementById("bodyTabla");
+tbody.innerHTML = "";
 
-        tbody.innerHTML += `
-          <tr>
-            <td>${reg.cliente}</td>
-            <td>${reg.operacion}</td>
-            <td>$${Number(reg.ingreso).toLocaleString()}</td>
-            <td>$${Number(reg.egreso).toLocaleString()}</td>
-            <td class="${reg.saldo >= 0 ? 'saldo-positivo' : 'saldo-negativo'}">
-              $${Number(reg.saldo).toLocaleString()}
-            </td>
-            <td>${estado}</td>
-            <td>${reg.obs || "-"}</td>
-          </tr>
-        `;
-      });
+try {
 
-    } catch (error) {
-      console.error(error);
-      tbody.innerHTML = `<tr><td colspan="7">Error al cargar datos</td></tr>`;
-    }
-  }
+const res = await fetch(
+`http://localhost:3000/api/cuenta-corriente?search=${filtro}`
+);
 
-  cargarTabla();
+const datos = await res.json();
 
-  document.getElementById("search").addEventListener("input", e => {
-    cargarTabla(e.target.value);
-  });
+datos.forEach(reg => {
+
+const estado =
+reg.saldo > 0 ? "A COBRAR" :
+reg.saldo < 0 ? "A PAGAR" :
+"OK";
+
+tbody.innerHTML += `
+<tr>
+<td>${reg.cliente}</td>
+<td>${reg.operacion}</td>
+<td>$${Number(reg.ingreso).toLocaleString()}</td>
+<td>$${Number(reg.egreso).toLocaleString()}</td>
+<td class="${reg.saldo >= 0 ? 'saldo-positivo' : 'saldo-negativo'}">
+$${Number(reg.saldo).toLocaleString()}
+</td>
+<td>${estado}</td>
+<td>${reg.obs || "-"}</td>
+</tr>
+`;
+
+});
+
+} catch (error) {
+
+console.error(error);
+tbody.innerHTML = `<tr><td colspan="7">Error al cargar datos</td></tr>`;
+
+}
+
+}
+
+cargarTabla();
+
+document.getElementById("search").addEventListener("input", e => {
+cargarTabla(e.target.value);
+});
+
 </script>
+
 <script>
+
 const rol = localStorage.getItem("rol");
 
+// 🔒 Control de acceso
 if (!rol || (rol !== "supervisor" && rol !== "admin")) {
-  window.location.href = "index.html";
+window.location.href = "index.html";
 }
+
+// 🚪 Logout
+function logout(){
+localStorage.removeItem("rol");
+window.location.href = "login.html";
+}
+
 </script>
 
 </body>

@@ -84,142 +84,150 @@
       .nav { display: none; }
     }
     .nav {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-}
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
 
-.nav details summary {
-    cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+    .nav details summary {
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
 
-.nav a {
-    display: block;
-    margin-left: 10px;
-    padding: 2px 0;
-}
-
+    .nav a {
+      display: block;
+      margin-left: 10px;
+      padding: 2px 0;
+    }
   </style>
 </head>
+
 <body>
 
-  <header class="header">
-    <div class="brand">Alta Cliente</div>
-    <nav class="nav">
+<header class="header">
+  <div class="brand">Alta Cliente</div>
+
+  <nav class="nav">
 
     <a href="index.html" class="nav-home">Inicio</a>
 
     <details id="menu-ventas">
-    <summary>Ventas</summary>
-        <a href="ingreso.html">Ingreso de ventas </a>
-        <a href="envios.html">Envíos</a>
-        
-        
+      <summary>Ventas</summary>
+      <a href="ingreso.html">Ingreso de ventas</a>
+      <a href="envios.html">Envíos</a>
     </details>
 
     <details id="menu-admin">
-    <summary>Administración</summary>
-        <a href="planCuentas.html">Plan de cuentas</a>
-        <a href="cuentaCorriente.html">Cuenta corriente</a>
-        <a href="reportesClientes.html">Reporte clientes</a>
-        <a href="salidaPedidos.html">Baja final de ventas</a>
-        <a href="cuentas.html">Alta de clientes</a>
-        <a href="arqueo.html">Registro de pagos</a>
+      <summary>Administración</summary>
+      <a href="planCuentas.html">Plan de cuentas</a>
+      <a href="cuentaCorriente.html">Cuenta corriente</a>
+      <a href="reportesClientes.html">Reporte clientes</a>
+      <a href="salidaPedidos.html">Baja final de ventas</a>
+      <a href="cuentas.html">Alta de clientes</a>
+      <a href="arqueo.html">Registro de pagos</a>
     </details>
 
     <details id="menu-gerencia">
-    <summary>Gerencia</summary>
-        <a href="reportes.html">Reportes</a>
-        <a href="usuarios.html">Usuarios y permisos</a>
+      <summary>Gerencia</summary>
+      <a href="reportes.html">Reportes</a>
+      <a href="usuarios.html">Usuarios y permisos</a>
     </details>
 
     <details id="menu-sistema">
-    <summary>Sistema</summary>
-        <a href="configuracion.html">Configuración</a>
-        <a href="auditoria.html">Auditoría</a>
+      <summary>Sistema</summary>
+      <a href="configuracion.html">Configuración</a>
+      <a href="auditoria.html">Auditoría</a>
     </details>
 
-</nav>
+    <button onclick="logout()" class="btn">Salir</button>
 
-  </header>
+  </nav>
+</header>
 
-  <main class="container">
-    <div class="card">
-      <h3>Alta de Cliente</h3>
-      <form id="form-cliente">
+<main class="container">
 
-        <div class="form-row">
-          <label class="small" for="nombreCliente">Nombre del Cliente:</label>
-          <input type="text" id="nombreCliente" class="input" placeholder="Ej: Juan Pérez">
-        </div>
+  <div class="card">
+    <h3>Alta de Cliente</h3>
 
-              <div class="form-row">
-        <label class="small" for="condicion">Condición comercial:</label>
-        <input type="text" id="condicion" name="condicion" class="input" placeholder="Ingrese condición">
+    <form id="form-cliente">
+
+      <div class="form-row">
+        <label class="small">Nombre del Cliente:</label>
+        <input type="text" id="nombreCliente" class="input" placeholder="Ej: Juan Pérez">
       </div>
 
+      <div class="form-row">
+        <label class="small">Condición comercial:</label>
+        <input type="text" id="condicion" class="input" placeholder="Ingrese condición">
+      </div>
 
-        <div class="form-row">
-          <label class="small" for="porcentajeIngreso">Porcentaje de comision:</label>
-          <input type="number" id="porcentajeIngreso" class="input" step="0.01" placeholder="Ej: 15.5">
-        </div>
+      <div class="form-row">
+        <label class="small">Porcentaje de comisión:</label>
+        <input type="number" id="porcentajeIngreso" class="input" step="0.01" placeholder="Ej: 15.5">
+      </div>
 
-        <div style="margin-top:12px; display:flex; justify-content:flex-end;">
-          <button type="submit" class="btn">Guardar cliente</button>
-        </div>
-      </form>
-    </div>
+      <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+        <button type="submit" class="btn">Guardar cliente</button>
+      </div>
 
-    <div class="footer">Gestión de clientes</div>
-  </main>
+    </form>
+  </div>
+
+  <div class="footer">Gestión de clientes</div>
+
+</main>
 
 <script>
-  document.getElementById('form-cliente').addEventListener('submit', async function (e) {
-    e.preventDefault();
+document.getElementById('form-cliente').addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-    const nombre = document.getElementById('nombreCliente').value.trim();
-    const condicion = document.getElementById('condicion').value.trim();
-    const porcentaje = document.getElementById('porcentajeIngreso').value;
+  const nombre = document.getElementById('nombreCliente').value.trim();
+  const condicion = document.getElementById('condicion').value.trim();
+  const porcentaje = document.getElementById('porcentajeIngreso').value;
 
-    if (!nombre || !condicion || !porcentaje) {
-      alert('Por favor, completá todos los campos.');
+  if (!nombre || !condicion || !porcentaje) {
+    alert('Por favor, completá todos los campos.');
+    return;
+  }
+
+  try {
+
+    const response = await fetch('http://localhost:3000/api/clientes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre,
+        condicion,
+        porcentaje
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.mensaje || 'Error al guardar cliente');
       return;
     }
 
-    try {
-      const response = await fetch('http://localhost:3000/api/clientes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nombre,
-          condicion,
-          porcentaje
-        })
-      });
+    alert('Cliente guardado correctamente');
+    this.reset();
 
-      const data = await response.json();
+  } catch (error) {
 
-      if (!response.ok) {
-        alert(data.mensaje || 'Error al guardar cliente');
-        return;
-      }
+    alert('Error de conexión con el servidor');
+    console.error(error);
 
-      alert('Cliente guardado correctamente');
-      this.reset();
+  }
 
-    } catch (error) {
-      alert('Error de conexión con el servidor');
-      console.error(error);
-    }
-  });
+});
 </script>
+
 <script>
+
 const rol = localStorage.getItem("rol");
 
-// 🔒 CONTROL DE ACCESO A ESTA PÁGINA (altaCliente.html)
-// Esta página solo puede verla supervisor y admin
+// 🔒 CONTROL DE ACCESO
 if (!rol || (rol !== "supervisor" && rol !== "admin")) {
   window.location.href = "index.html";
 }
@@ -239,8 +247,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
-</script>
 
+// 🚪 LOGOUT
+function logout() {
+  localStorage.removeItem("rol");
+  window.location.href = "login.html";
+}
+
+</script>
 
 </body>
 </html>

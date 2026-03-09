@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -32,299 +33,105 @@
 <body>
   <div class="container">
 
-    <!-- NAV COMPLETO -->
-    <header class="header">
-      <nav class="nav">
-        <a href="index.html" class="nav-home">Inicio</a>
 
-        <details>
-            <summary>Ventas</summary>
-            <a href="ingreso.html">Ingreso de ventas </a>
-            <a href="envios.html">Envíos</a>
-            <a href="arqueo.html">Arqueo Caja</a>
-            
-        </details>
+<header class="header">
+  <nav class="nav">
 
-        <details>
-            <summary>Administración</summary>
-            <a href="planCuentas.html">Plan de cuentas</a>
-            <a href="cuentaCorriente.html">Cuenta corriente</a>
-            <a href="reportesClientes.html">Reporte clientes</a>
-            <a href="salidaPedidos.html">Baja final de ventas</a>
-            <a href="cuentas.html">Alta de clientes</a>
-        </details>
+    <a href="index.html" class="nav-home">Inicio</a>
 
-        <details>
-            <summary>Gerencia</summary>
-            <a href="reportes.html">Reportes</a>
-            <a href="usuarios.html">Usuarios y permisos</a>
-        </details>
+    <details>
+        <summary>Ventas</summary>
+        <a href="ingreso.html">Ingreso de ventas </a>
+        <a href="envios.html">Envíos</a>
+        <a href="arqueo.html">Arqueo Caja</a>
+    </details>
 
-        <details>
-            <summary>Sistema</summary>
-            <a href="configuracion.html">Configuración</a>
-            <a href="auditoria.html">Auditoría</a>
-        </details>
-      </nav>
-    </header>
+    <details>
+        <summary>Administración</summary>
+        <a href="planCuentas.html">Plan de cuentas</a>
+        <a href="cuentaCorriente.html">Cuenta corriente</a>
+        <a href="reportesClientes.html">Reporte clientes</a>
+        <a href="salidaPedidos.html">Baja final de ventas</a>
+        <a href="cuentas.html">Alta de clientes</a>
+    </details>
 
-    <!-- FORMULARIO -->
-    <div class="card">
-      <h3>Alta / Edición de Cliente</h3>
-      <div class="note">Completa los datos y presiona <strong>Guardar</strong>. El porcentaje debe ser entre 0 y 100.</div>
+    <details>
+        <summary>Gerencia</summary>
+        <a href="reportes.html">Reportes</a>
+        <a href="usuarios.html">Usuarios y permisos</a>
+    </details>
 
-      <form id="form-cliente" autocomplete="off">
-        <input type="hidden" id="clienteId" value="">
+    <details>
+        <summary>Sistema</summary>
+        <a href="configuracion.html">Configuración</a>
+        <a href="auditoria.html">Auditoría</a>
+    </details>
 
-        <div class="form-row">
-          <label class="small" for="nombre">Nombre:</label>
-          <input id="nombre" name="nombre" class="input" required placeholder="Razón social o nombre">
-        </div>
+    <button onclick="logout()" class="btn">Salir</button>
 
-        <!-- MODIFICADO: CAMPO LIBRE "Condición Comercial" -->
-        <div class="form-row">
-          <label class="small" for="condicion">Condición Comercial:</label>
-          <input id="condicion" name="condicion" class="input" placeholder="Ej: Mayorista, Minorista, Convenio, etc.">
-        </div>
+  </nav>
+</header>
 
-        <div class="form-row">
-          <label class="small" for="porcentaje">Porcentaje (%):</label>
-          <input id="porcentaje" name="porcentaje" type="number" min="0" max="100" step="0.01" class="input">
-        </div>
+<div class="card">
+  <h3>Alta / Edición de Cliente</h3>
+  <div class="note">Completa los datos y presiona <strong>Guardar</strong>. El porcentaje debe ser entre 0 y 100.</div>
 
-        <div class="form-row">
-          <label class="small" for="comentarios">Comentarios:</label>
-          <textarea id="comentarios" class="input"></textarea>
-        </div>
+  <form id="form-cliente" autocomplete="off">
+    <input type="hidden" id="clienteId" value="">
 
-        <div style="margin-top:12px;display:flex;gap:8px">
-          <button class="btn" type="submit" id="btnGuardar">Guardar</button>
-          <button class="btn ghost" type="button" id="btnCancelar">Cancelar</button>
-          <button class="btn ghost" type="button" id="btnExport">Exportar CSV</button>
-        </div>
-      </form>
+    <div class="form-row">
+      <label class="small" for="nombre">Nombre:</label>
+      <input id="nombre" name="nombre" class="input" required placeholder="Razón social o nombre">
     </div>
 
-    <!-- LISTADO -->
-    <div class="card">
-      <h3>Clientes registrados</h3>
-
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-        <div class="search-row">
-          <input id="q" class="input" placeholder="Buscar por nombre..." style="min-width:240px">
-          <button class="btn ghost" id="btnBuscar">Buscar</button>
-          <button class="btn ghost" id="btnClear">Limpiar</button>
-        </div>
-        <div class="small" id="stats"></div>
-      </div>
-
-      <div id="listado" style="margin-top:12px"></div>
+    <div class="form-row">
+      <label class="small" for="condicion">Condición Comercial:</label>
+      <input id="condicion" name="condicion" class="input" placeholder="Ej: Mayorista, Minorista, Convenio, etc.">
     </div>
+
+    <div class="form-row">
+      <label class="small" for="porcentaje">Porcentaje (%):</label>
+      <input id="porcentaje" name="porcentaje" type="number" min="0" max="100" step="0.01" class="input">
+    </div>
+
+    <div class="form-row">
+      <label class="small" for="comentarios">Comentarios:</label>
+      <textarea id="comentarios" class="input"></textarea>
+    </div>
+
+    <div style="margin-top:12px;display:flex;gap:8px">
+      <button class="btn" type="submit" id="btnGuardar">Guardar</button>
+      <button class="btn ghost" type="button" id="btnCancelar">Cancelar</button>
+      <button class="btn ghost" type="button" id="btnExport">Exportar CSV</button>
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <h3>Clientes registrados</h3>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+    <div class="search-row">
+      <input id="q" class="input" placeholder="Buscar por nombre..." style="min-width:240px">
+      <button class="btn ghost" id="btnBuscar">Buscar</button>
+      <button class="btn ghost" id="btnClear">Limpiar</button>
+    </div>
+    <div class="small" id="stats"></div>
+  </div>
+
+  <div id="listado" style="margin-top:12px"></div>
+</div>
+
+
   </div>
 
 <script>
-(() => {
-  const STORAGE_KEY = 'farmacia_clientes_v1';
-
-  const $ = sel => document.querySelector(sel);
-  const byId = id => document.getElementById(id);
-
-  function loadClientes(){ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-  function saveClientes(list){ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
-  function genId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
-
-  function crearCliente(obj){
-    const list = loadClientes();
-    list.unshift(obj);
-    saveClientes(list);
-  }
-
-  function actualizarCliente(id, changes){
-    const list = loadClientes();
-    const idx = list.findIndex(c => c.id === id);
-    if(idx === -1) return false;
-    list[idx] = {...list[idx], ...changes, updatedAt: new Date().toISOString()};
-    saveClientes(list);
-    return true;
-  }
-
-  function borrarCliente(id){
-    let list = loadClientes();
-    list = list.filter(c => c.id !== id);
-    saveClientes(list);
-  }
-
-  function validarDatos({nombre, porcentaje}) {
-    if(!nombre.trim()) return {ok:false,msg:'El nombre es obligatorio.'};
-    if(porcentaje !== '' && porcentaje !== null){
-      const n = Number(porcentaje);
-      if(Number.isNaN(n)) return {ok:false,msg:'El porcentaje debe ser un número.'};
-      if(n < 0 || n > 100) return {ok:false,msg:'Debe ser entre 0 y 100.'};
-    }
-    return {ok:true};
-  }
-
-  function existeNombreDuplicado(nombre, excludingId = null){
-    const list = loadClientes();
-    const low = nombre.trim().toLowerCase();
-    return list.some(c => c.nombre.trim().toLowerCase() === low && c.id !== excludingId);
-  }
-
-  function escapeHtml(str = '') {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  }
-
-  function renderListado(filter = ''){
-    const cont = byId('listado');
-    const list = loadClientes();
-    const filtered = filter.trim() === '' ? list : list.filter(c => c.nombre.toLowerCase().includes(filter.toLowerCase()));
-
-    if(filtered.length === 0){
-      cont.innerHTML = '<div class="small">No hay clientes registrados.</div>';
-      byId('stats').textContent = `Total: ${list.length}`;
-      return;
-    }
-
-    cont.innerHTML = `
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th><th>Nombre</th><th>Condición</th><th>Porcentaje</th><th>Comentarios</th><th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${filtered.map(c => `
-            <tr>
-              <td>${c.id.slice(-6)}</td>
-              <td><strong>${escapeHtml(c.nombre)}</strong></td>
-              <td>${escapeHtml(c.condicion || '')}</td>
-              <td>${c.porcentaje || '-'}%</td>
-              <td>${escapeHtml(c.comentarios || '')}</td>
-              <td class="actions">
-                <button class="btn ghost" onclick="onEditar('${c.id}')">Editar</button>
-                <button class="btn ghost" onclick="onEliminar('${c.id}')">Eliminar</button>
-              </td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    `;
-
-    byId('stats').textContent = `Mostrando ${filtered.length} / Total ${list.length}`;
-  }
-
-  const form = byId('form-cliente');
-  const fldId = byId('clienteId');
-  const fldNombre = byId('nombre');
-  const fldCond = byId('condicion');
-  const fldPorc = byId('porcentaje');
-  const fldCom = byId('comentarios');
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const payload = {
-      nombre: fldNombre.value.trim(),
-      condicion: fldCond.value.trim(),
-      porcentaje: fldPorc.value === '' ? '' : Number(fldPorc.value),
-      comentarios: fldCom.value.trim()
-    };
-
-    const validation = validarDatos(payload);
-    if(!validation.ok){ alert(validation.msg); return; }
-
-    if(existeNombreDuplicado(payload.nombre, fldId.value || null)){
-      alert('Ya existe un cliente con ese nombre.');
-      return;
-    }
-
-    if(fldId.value){
-      actualizarCliente(fldId.value, payload);
-      alert('Cliente actualizado.');
-    } else {
-      crearCliente({
-        id: genId(),
-        ...payload,
-        createdAt: new Date().toISOString(),
-        updatedAt: null
-      });
-      alert('Cliente creado.');
-    }
-
-    resetForm();
-    renderListado(byId('q').value);
-  });
-
-  function resetForm(){
-    fldId.value = '';
-    fldNombre.value = '';
-    fldCond.value = '';
-    fldPorc.value = '';
-    fldCom.value = '';
-    byId('btnGuardar').textContent = 'Guardar';
-  }
-
-  window.onEditar = function(id){
-    const list = loadClientes();
-    const c = list.find(x => x.id === id);
-    if(!c) return;
-
-    fldId.value = c.id;
-    fldNombre.value = c.nombre;
-    fldCond.value = c.condicion || '';
-    fldPorc.value = c.porcentaje || '';
-    fldCom.value = c.comentarios || '';
-    byId('btnGuardar').textContent = 'Actualizar';
-
-    window.scrollTo({top:0,behavior:'smooth'});
-  };
-
-  window.onEliminar = function(id){
-    if(confirm('Confirmar eliminación?')){
-      borrarCliente(id);
-      renderListado(byId('q').value);
-    }
-  };
-
-  byId('btnBuscar').addEventListener('click', ()=> renderListado(byId('q').value));
-  byId('q').addEventListener('keyup', (e)=> { if(e.key === 'Enter') renderListado(byId('q').value); });
-  byId('btnClear').addEventListener('click', ()=> { byId('q').value=''; renderListado(''); });
-
-  byId('btnExport').addEventListener('click', ()=> {
-    const list = loadClientes();
-    if(list.length === 0){ alert('No hay datos.'); return; }
-
-    const hdr = ['id','nombre','condicion','porcentaje','comentarios','createdAt','updatedAt'];
-    const csv = [hdr.join(',')]
-      .concat(list.map(c =>
-        `"${c.id}","${c.nombre}","${c.condicion||''}","${c.porcentaje||''}","${c.comentarios||''}","${c.createdAt||''}","${c.updatedAt||''}"`
-      ))
-      .join('\n');
-
-    const blob = new Blob([csv], {type:'text/csv'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'clientes.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-
-  function seed(){
-    if(loadClientes().length === 0){
-      saveClientes([
-        { id: genId(), nombre:'Farmacia Central', condicion:'Mayorista', porcentaje:5, comentarios:'Cliente ejemplo', createdAt:new Date().toISOString(), updatedAt:null }
-      ]);
-    }
-  }
-
-  seed();
-  renderListado();
-})();
+function logout(){
+  localStorage.removeItem("rol");
+  window.location.href = "login.html";
+}
 </script>
+
 <script>
 const rol = localStorage.getItem("rol");
 
@@ -332,5 +139,6 @@ if (!rol || (rol !== "supervisor" && rol !== "admin")) {
   window.location.href = "index.html";
 }
 </script>
+
 </body>
 </html>

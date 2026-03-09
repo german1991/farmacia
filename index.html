@@ -72,6 +72,11 @@
       text-decoration: none;
       display: inline-block;
     }
+    .btn.ghost{
+      background: transparent;
+      color: #111;
+      border:1px solid #ddd;
+    }
     .footer {
       margin-top: 40px;
       color: var(--muted);
@@ -79,22 +84,22 @@
       text-align: center;
     }
     .nav {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-}
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
 
-.nav details summary {
-    cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+    .nav details summary {
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
 
-.nav a {
-    display: block;
-    margin-left: 10px;
-    padding: 2px 0;
-}
+    .nav a {
+      display: block;
+      margin-left: 10px;
+      padding: 2px 0;
+    }
 
   </style>
 </head>
@@ -103,11 +108,11 @@
   <header class="header">
    <nav class="nav">
     <a href="index.html" class="nav-home">Inicio</a>
+
     <details id="menuVentas">
       <summary>Ventas</summary>
       <a href="ingreso.html">Ingreso de ventas</a>
       <a href="envios.html">Envíos</a>
-      
     </details>
 
     <details id="menuAdmin">
@@ -133,8 +138,9 @@
         <a href="auditoria.html">Auditoría</a>
     </details>
 
-</nav>
+    <button onclick="logout()" class="btn ghost">Salir</button>
 
+   </nav>
   </header>
 
   <main class="container">
@@ -145,8 +151,9 @@
     </div>
     <div class="footer">Farmacia - Demo</div>
   </main>
+
 <script>
-  const rol = localStorage.getItem("rol");
+const rol = localStorage.getItem("rol");
 
 if (!rol) {
   window.location.href = "login.html";
@@ -165,10 +172,14 @@ if (rol === "supervisor") {
 }
 
 // admin ve todo
+
+function logout(){
+  localStorage.removeItem("rol");
+  window.location.href = "login.html";
+}
 </script>
 
 <script src="main.js"></script>
-
 
 </body>
 </html>

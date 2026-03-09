@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -11,37 +12,39 @@
 
 <nav class="nav">
 
-    <a href="index.html" class="nav-home">Inicio</a>
+```
+<a href="index.html" class="nav-home">Inicio</a>
 
-    <details>
-        <summary>Ventas</summary>
-        <a href="ingreso.html">Ingreso de ventas </a>
-        <a href="envios.html">Envíos</a>
-        
-        
-    </details>
+<details>
+    <summary>Ventas</summary>
+    <a href="ingreso.html">Ingreso de ventas </a>
+    <a href="envios.html">Envíos</a>
+</details>
 
-    <details>
-        <summary>Administración</summary>
-        <a href="planCuentas.html">Plan de cuentas</a>
-        <a href="cuentaCorriente.html">Cuenta corriente</a>
-        <a href="reportesClientes.html">Reporte clientes</a>
-        <a href="salidaPedidos.html">Baja final de ventas</a>
-        <a href="cuentas.html">Alta de clientes</a>
-        <a href="arqueo.html">Registro de pagos</a>
-    </details>
+<details>
+    <summary>Administración</summary>
+    <a href="planCuentas.html">Plan de cuentas</a>
+    <a href="cuentaCorriente.html">Cuenta corriente</a>
+    <a href="reportesClientes.html">Reporte clientes</a>
+    <a href="salidaPedidos.html">Baja final de ventas</a>
+    <a href="cuentas.html">Alta de clientes</a>
+    <a href="arqueo.html">Registro de pagos</a>
+</details>
 
-    <details>
-        <summary>Gerencia</summary>
-        <a href="reportes.html">Reportes</a>
-        <a href="usuarios.html">Usuarios y permisos</a>
-    </details>
+<details>
+    <summary>Gerencia</summary>
+    <a href="reportes.html">Reportes</a>
+    <a href="usuarios.html">Usuarios y permisos</a>
+</details>
 
-    <details>
-        <summary>Sistema</summary>
-        <a href="configuracion.html">Configuración</a>
-        <a href="auditoria.html">Auditoría</a>
-    </details>
+<details>
+    <summary>Sistema</summary>
+    <a href="configuracion.html">Configuración</a>
+    <a href="auditoria.html">Auditoría</a>
+</details>
+
+<button onclick="logout()" class="btn">Salir</button>
+```
 
 </nav>
 
@@ -55,31 +58,41 @@
   <div style="margin-top:16px" class="card">
     <h3>Crear envío manual</h3>
 
-    <form id="form-envio">
+```
+<form id="form-envio">
 
-      <div class="form-row">
+  <div class="form-row">
 
-        <!-- FECHA POR DEFECTO -->
-        <input class="input" type="date" name="fecha" id="fecha">
+    <!-- FECHA POR DEFECTO -->
+    <input class="input" type="date" name="fecha" id="fecha">
 
-        <!-- NRO OPERACION -->
-        <input class="input" name="nroOperacion" placeholder="N° operación">
+    <!-- NRO OPERACION -->
+    <input class="input" name="nroOperacion" placeholder="N° operación">
 
-      </div>
+  </div>
 
-      <div>
-        <button class="btn" type="submit">Cargar y confirmar el envío</button>
-      </div>
+  <div>
+    <button class="btn" type="submit">Cargar y confirmar el envío</button>
+  </div>
 
-    </form>
+</form>
+```
+
   </div>
 
   <div class="footer">Envíos</div>
 
 </main>
 
-
 <script>
+
+/* ---------------------------- LOGOUT ---------------------------- */
+
+function logout(){
+  localStorage.removeItem("rol");
+  window.location.href = "login.html";
+}
+
 /* ---------------------------- LOCAL STORAGE ---------------------------- */
 
 function getEnvios() {
@@ -173,6 +186,7 @@ document.getElementById('fecha').value = new Date().toISOString().split("T")[0];
 
 renderEnvios();
 </script>
+
 <script>
   const rol = localStorage.getItem("rol");
 
@@ -199,8 +213,6 @@ renderEnvios();
     margin-left: 10px;
     padding: 2px 0;
 }
-
-
 </style>
 
 </body>

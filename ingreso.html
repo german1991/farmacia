@@ -72,10 +72,14 @@
 <header class="header">
   <nav class="nav">
     <a href="index.html">Inicio</a>
+
     <details>
       <summary>Ventas</summary>
-      <a href="ingreso.html">Ingreso de ventas </a>
+      <a href="ingreso.html">Ingreso de ventas</a>
     </details>
+
+    <button onclick="logout()" class="btn ghost">Salir</button>
+
   </nav>
 </header>
 
@@ -84,7 +88,7 @@
   <div class="card">
     <h3>Crear nuevo pedido</h3>
 
-    <form id="form-ingreso">
+    <form id="form-ingreso" enctype="multipart/form-data">
       <label>N° Operación</label>
       <input type="text" id="nroOperacion" readonly>
 
@@ -112,12 +116,30 @@
         <option>Mercado Pago</option>
         <option>Cuenta corriente</option>
       </select>
+
       <label>Precio</label>
       <input type="number" id="precio" step="0.01" min="0" required>
+      <label>Prioridad</label>
+<select id="prioridad" required>
+  <option value="cargado">Cargado</option>
+  <option value="impreso">Impreso</option>
+  <option value="terminado">Terminado</option>
+  <option value="enviado">Enviado</option>
+  <option value="prioridad">Prioridad</option>
+  <option value="dado de baja">Dado de baja</option>
+</select>
+
+      <!-- NUEVOS CAMPOS PARA ARCHIVOS -->
+      <label>Adjuntar Factura (PDF)</label>
+      <input type="file" id="factura" accept=".pdf">
+
+      <label>Adjuntar Foto de Receta (JPG/PNG)</label>
+      <input type="file" id="fotoReceta" accept="image/png, image/jpeg">
 
       <button class="btn" type="submit">Cargar</button>
     </form>
   </div>
+</div>
 
   <div class="card">
     <h3>Pedidos cargados</h3>
@@ -125,14 +147,19 @@
   </div>
 
 </div>
+
 <script>
   const rol = localStorage.getItem("rol");
 
   if (!rol || (rol !== "admin" && rol !== "supervisor" && rol !== "ventas")) {
     window.location.href = "login.html";
   }
-</script>
 
+  function logout(){
+    localStorage.removeItem("rol");
+    window.location.href = "login.html";
+  }
+</script>
 
 <!-- JS DEL FRONTEND -->
 <script src="ingreso.js"></script>

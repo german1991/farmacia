@@ -1,167 +1,278 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Ingreso Pedidos - Farmacia</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ingreso Pedidos - Farmacia</title>
 
-  <style>
-    :root {
-      --bg: #f6f7fb;
-      --card: #fff;
-      --accent: #0ea5a1;
-      --muted: #6b7280;
-    }
+<style>
 
-    * { box-sizing: border-box; }
+:root{
+--bg:#f6f7fb;
+--card:#fff;
+--accent:#0ea5a1;
+--muted:#6b7280;
+}
 
-    body {
-      font-family: Inter, system-ui, Arial, sans-serif;
-      margin: 0;
-      background: var(--bg);
-      color: #111;
-    }
+*{box-sizing:border-box;}
 
-    .header {
-      background: var(--card);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      display: flex;
-      align-items: center;
-      padding: 12px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+body{
+font-family:Inter,system-ui,Arial,sans-serif;
+margin:0;
+background:var(--bg);
+color:#111;
+}
 
-    .nav { display: flex; gap: 20px; margin-left: auto; }
-    .nav details summary { cursor: pointer; font-weight: bold; }
-    .nav a { text-decoration: none; color: #111; display: block; }
+.header{
+background:var(--card);
+box-shadow:0 1px 3px rgba(0,0,0,0.06);
+display:flex;
+align-items:center;
+padding:12px 20px;
+position:sticky;
+top:0;
+z-index:10;
+}
 
-    .container { max-width: 900px; margin: auto; padding: 20px; }
-    .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+.nav{display:flex;gap:20px;margin-left:auto;}
+.nav details summary{cursor:pointer;font-weight:bold;}
+.nav a{text-decoration:none;color:#111;display:block;}
 
-    input, select, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
+.container{max-width:900px;margin:auto;padding:20px;}
 
-    input[readonly] { background: #e6e6e6; font-weight: bold; }
+.card{
+background:white;
+padding:20px;
+border-radius:8px;
+margin-bottom:20px;
+}
 
-    .btn {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      background: #0ea5a1;
-      color: white;
-    }
+input,select,textarea{
+width:100%;
+padding:8px;
+margin-bottom:10px;
+border-radius:5px;
+border:1px solid #ccc;
+}
 
-    .btn.ghost { background: #888; }
+input[readonly]{
+background:#e6e6e6;
+font-weight:bold;
+}
 
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #ccc; padding: 8px; font-size: 14px; }
-    th { background: #eee; }
-  </style>
+.checkbox{
+width:auto;
+margin-right:8px;
+}
+
+.btn{
+padding:10px 18px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+background:#0ea5a1;
+color:white;
+}
+
+.btn.ghost{
+background:#888;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:8px;
+font-size:14px;
+}
+
+th{
+background:#eee;
+}
+
+/* impresión de tickets */
+
+@media print{
+
+.ticket{
+width:48%;
+display:inline-block;
+border:1px solid black;
+padding:10px;
+margin-right:2%;
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
 <header class="header">
-  <nav class="nav">
-    <a href="index.html">Inicio</a>
+<nav class="nav">
 
-    <details>
-      <summary>Ventas</summary>
-      <a href="ingreso.html">Ingreso de ventas</a>
-    </details>
+<a href="index.html">Inicio</a>
 
-    <button onclick="logout()" class="btn ghost">Salir</button>
+<details>
+<summary>Ventas</summary>
+<a href="ingreso.html">Ingreso de ventas</a>
+</details>
 
-  </nav>
+<button onclick="logout()" class="btn ghost">Salir</button>
+
+</nav>
 </header>
 
 <div class="container">
 
-  <div class="card">
-    <h3>Crear nuevo pedido</h3>
+<div class="card">
 
-    <form id="form-ingreso" enctype="multipart/form-data">
-      <label>N° Operación</label>
-      <input type="text" id="nroOperacion" readonly>
+<h3>Crear nuevo pedido</h3>
 
-      <label>Fecha</label>
-      <input type="date" id="fecha" readonly>
+<form id="form-ingreso" enctype="multipart/form-data">
 
-      <label>Cliente</label>
-      <input type="text" id="cliente" required>
+<label>N° Operación</label>
+<input type="text" id="nroOperacion" readonly>
 
-      <label>Paciente</label>
-      <input type="text" id="paciente">
+<label>Fecha</label>
+<input type="date" id="fecha" readonly>
 
-      <label>RP</label>
-      <input type="text" id="rp">
+<label>Cliente</label>
+<input type="text" id="cliente" required>
 
-      <label>Detalles</label>
-      <textarea id="detalles"></textarea>
+<label>Paciente</label>
+<input type="text" id="paciente">
 
-      <label>Envío</label>
-      <input type="text" id="envio">
+<label>RP</label>
+<input type="text" id="rp">
 
-      <label>Canal de pago</label>
-      <select id="canal">
-        <option>Tarjeta de crédito</option>
-        <option>Mercado Pago</option>
-        <option>Cuenta corriente</option>
-      </select>
+<label>Detalles</label>
+<textarea id="detalles"></textarea>
 
-      <label>Precio</label>
-      <input type="number" id="precio" step="0.01" min="0" required>
-      <label>Prioridad</label>
-<select id="prioridad" required>
-  <option value="cargado">Cargado</option>
-  <option value="impreso">Impreso</option>
-  <option value="terminado">Terminado</option>
-  <option value="enviado">Enviado</option>
-  <option value="prioridad">Prioridad</option>
-  <option value="dado de baja">Dado de baja</option>
+<label>Envío</label>
+<input type="text" id="envio">
+
+<label>Canal de pago</label>
+<select id="canal">
+<option>Tarjeta de crédito</option>
+<option>Mercado Pago</option>
+<option>Cuenta corriente</option>
 </select>
 
-      <!-- NUEVOS CAMPOS PARA ARCHIVOS -->
-      <label>Adjuntar Factura (PDF)</label>
-      <input type="file" id="factura" accept=".pdf">
+<label>Precio</label>
+<input type="number" id="precio" step="0.01" min="0" required>
 
-      <label>Adjuntar Foto de Receta (JPG/PNG)</label>
-      <input type="file" id="fotoReceta" accept="image/png, image/jpeg">
+<label>
+<input type="checkbox" id="prioridad" class="checkbox">
+Venta con prioridad
+</label>
 
-      <button class="btn" type="submit">Cargar</button>
-    </form>
-  </div>
+<input type="hidden" id="estado" value="cargado">
+
+<label>Adjuntar Factura (PDF)</label>
+<input type="file" id="factura" accept=".pdf">
+
+<label>Adjuntar Foto del Pago (JPG/PNG)</label>
+<input type="file" id="fotoPago" accept="image/png, image/jpeg">
+
+<button class="btn" type="submit">Cargar</button>
+
+</form>
+
 </div>
 
-  <div class="card">
-    <h3>Pedidos cargados</h3>
-    <div id="listaPedidos"></div>
-  </div>
+<div class="card">
+
+<h3>Pedidos cargados</h3>
+
+<div id="listaPedidos"></div>
+
+<br>
+
+<button onclick="imprimirTicket()" class="btn">Imprimir ticket</button>
+
+</div>
+
+</div>
+
+<!-- tickets ocultos para imprimir -->
+
+<div id="ticketPrint" style="display:none">
+
+<div class="ticket">
+
+<h4>Ticket de venta</h4>
+
+<p><b>Cliente:</b> Juan Perez</p>
+<p><b>Paciente:</b> Maria Perez</p>
+<p><b>Producto:</b> Medicación</p>
+<p><b>Precio:</b> $5000</p>
+
+</div>
+
+<div class="ticket">
+
+<h4>Ticket de venta</h4>
+
+<p><b>Cliente:</b> Juan Perez</p>
+<p><b>Paciente:</b> Maria Perez</p>
+<p><b>Producto:</b> Medicación</p>
+<p><b>Precio:</b> $5000</p>
+
+</div>
 
 </div>
 
 <script>
-  const rol = localStorage.getItem("rol");
 
-  if (!rol || (rol !== "admin" && rol !== "supervisor" && rol !== "ventas")) {
-    window.location.href = "login.html";
-  }
+const rol = localStorage.getItem("rol");
 
-  function logout(){
-    localStorage.removeItem("rol");
-    window.location.href = "login.html";
-  }
+if(!rol || (rol!=="admin" && rol!=="supervisor" && rol!=="ventas")){
+window.location.href="login.html";
+}
+
+function logout(){
+localStorage.removeItem("rol");
+window.location.href="login.html";
+}
+
+function imprimirTicket(){
+
+const contenido=document.getElementById("ticketPrint").innerHTML;
+
+const ventana=window.open('','','width=800,height=600');
+
+ventana.document.write(`
+<html>
+<head>
+<title>Ticket</title>
+<style>
+.ticket{
+width:48%;
+display:inline-block;
+border:1px solid black;
+padding:10px;
+margin-right:2%;
+}
+</style>
+</head>
+<body onload="window.print()">
+${contenido}
+</body>
+</html>
+`);
+
+ventana.document.close();
+
+}
+
 </script>
 
-<!-- JS DEL FRONTEND -->
 <script src="ingreso.js"></script>
 
 </body>

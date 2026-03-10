@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tickets abiertos - Farmacia</title>
+
+<style>
+
+:root{
+--bg:#f6f7fb;
+--card:#fff;
+--accent:#0ea5a1;
+}
+
+body{
+font-family: Inter, Arial;
+margin:0;
+background:var(--bg);
+}
+
+.nav{
+display:flex;
+gap:20px;
+padding:15px;
+background:white;
+box-shadow:0 1px 3px rgba(0,0,0,0.1);
+}
+
+.nav a{
+text-decoration:none;
+color:black;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:8px;
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:8px;
+font-size:14px;
+}
+
+th{
+background:#eee;
+}
+
+.btn{
+padding:6px 10px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+color:white;
+}
+
+.verificar{
+background:#16a34a;
+}
+
+.imprimir{
+background:#2563eb;
+}
+
+img{
+max-width:120px;
+border-radius:5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+
+<a href="index.html">Inicio</a>
+
+<details>
+<summary>Administración</summary>
+<a href="cambioEstados.html">Cambio de estados</a>
+<a href="ticketsAbiertos.html">Tickets abiertos</a>
+<a href="pagosPendientes.html">Pagos pendientes</a>
+</details>
+
+<button onclick="logout()">Salir</button>
+
+</nav>
+
+<div class="container">
+
+<div class="card">
+
+<h3>Tickets abiertos (pagos pendientes)</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>N° Operación</th>
+<th>Cliente</th>
+<th>Paciente</th>
+<th>Precio</th>
+<th>Estado</th>
+<th>Foto pago</th>
+<th>Acción</th>
+</tr>
+</thead>
+
+<tbody id="tablaTickets">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+let rol = localStorage.getItem("rol");
+
+if(!rol){
+window.location.href="login.html";
+}
+
+rol = rol.toLowerCase().trim();
+
+if(rol==="ventas"){
+alert("No tiene permisos para esta pantalla");
+window.location.href="index.html";
+}
+
+function logout(){
+localStorage.removeItem("rol");
+window.location.href="login.html";
+}
+
+
+function cargarTickets(){
+
+let ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+
+let tabla = document.getElementById("tablaTickets");
+
+tabla.innerHTML="";
+
+ventas.forEach((v,i)=>{
+
+if(v.estadoPago==="pendiente_verificar"){
+
+tabla.innerHTML += `
+<tr>
+
+<td>${v.nroOperacion}</td>
+<td>${v.cliente}</td>
+<td>${v.paciente}</td>
+<td>$${v.precio}</td>
+<td>${v.estado}</td>
+
+<td>
+${v.fotoPago ? `<img src="${v.fotoPago}">` : "-"}
+</td>
+
+<td>
+
+<button class="btn verificar" onclick="verificar(${i})">
+Verificar
+</button>
+
+<button class="btn imprimir" onclick="imprimir(${i})">
+Imprimir
+</button>
+
+</td>
+
+</tr>
+`;
+
+}
+
+});
+
+}
+
+function verificar(index){
+
+let ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+
+ventas[index].estadoPago="verificado";
+
+localStorage.setItem("ventas", JSON.stringify(ventas));
+
+alert("Pago verificado");
+
+cargarTickets();
+
+}
+
+function imprimir(index){
+
+let ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+
+let v = ventas[index];
+
+let ventana = window.open("", "", "width=800,height=600");
+
+ventana.document.write(`
+
+<html>
+
+<head>
+
+<style>
+
+body{font-family:Arial}
+
+.ticket{
+width:48%;
+display:inline-block;
+border:1px solid black;
+padding:10px;
+margin:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="ticket">
+<h3>Ticket de venta</h3>
+<p>Operacion: ${v.nroOperacion}</p>
+<p>Cliente: ${v.cliente}</p>
+<p>Paciente: ${v.paciente}</p>
+<p>Precio: $${v.precio}</p>
+</div>
+
+<div class="ticket">
+<h3>Ticket de venta</h3>
+<p>Operacion: ${v.nroOperacion}</p>
+<p>Cliente: ${v.cliente}</p>
+<p>Paciente: ${v.paciente}</p>
+<p>Precio: $${v.precio}</p>
+</div>
+
+</body>
+
+</html>
+
+`);
+
+ventana.print();
+
+}
+
+cargarTickets();
+
+</script>
+
+</body>
+</html>

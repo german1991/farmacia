@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arqueo de Caja - Gerencia</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<nav class="nav">
+
+<a href="index.html">Inicio</a>
+
+<details open>
+  <summary>Reportes</summary>
+  <a href="arqueoCaja.html">Arqueo de Caja</a>
+  <!-- Otros links de reportes -->
+  <a href="reportes.html">Todos los reportes</a>
+</details>
+
+<details>
+  <summary>Gerencia</summary>
+  <a href="usuarios.html">Usuarios y permisos</a>
+  <!-- Otros links de gerencia -->
+</details>
+
+<button onclick="logout()" class="btn">Salir</button>
+
+</nav>
+
+<main class="container">
+
+<div class="card">
+
+<h3>Arqueo de Caja</h3>
+
+<!-- Filtros -->
+
+<div class="form-row">
+
+<label>Desde</label>
+<input type="date" id="desde" class="input">
+
+<label>Hasta</label>
+<input type="date" id="hasta" class="input">
+
+<button class="btn" onclick="generarArqueo()">Consultar</button>
+<button class="btn" onclick="window.print()">Imprimir</button>
+
+</div>
+
+<!-- Resultado -->
+
+<div id="resultado" style="margin-top:20px"></div>
+
+</div>
+
+</main>
+
+<script>
+
+function generarArqueo() {
+
+const desde = document.getElementById('desde').value;
+const hasta = document.getElementById('hasta').value;
+
+if (!desde || !hasta) {
+alert('Seleccione un rango de fechas');
+return;
+}
+
+const operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
+
+const filtradas = operaciones.filter(op =>
+op.fecha >= desde && op.fecha <= hasta
+);
+
+let totalIngresos = 0;
+let totalEgresos = 0;
+
+let filas = filtradas.map(op => {
+
+if (op.tipo === 'INGRESO') totalIngresos += Number(op.monto);
+if (op.tipo === 'EGRESO') totalEgresos += Number(op.monto);
+
+return `
+<tr>
+<td>${op.fecha}</td>
+<td>${op.tipo}</td>
+<td>${op.canal}</td>
+<td>${op.concepto}</td>
+<td class="right">$ ${Number(op.monto).toLocaleString()}</td>
+</tr>
+`;
+
+}).join('');
+
+const saldo = totalIngresos - totalEgresos;
+
+document.getElementById('resultado').innerHTML = `
+<div class="print-area">
+
+<h4>Detalle de Operaciones</h4>
+
+<table class="table">
+
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Tipo</th>
+<th>Canal</th>
+<th>Concepto</th>
+<th>Monto</th>
+</tr>
+</thead>
+
+<tbody>
+${filas || '<tr><td colspan="5">Sin movimientos</td></tr>'}
+</tbody>
+
+</table>
+
+<div style="margin-top:15px">
+<p><b>Total Ingresos:</b> $ ${totalIngresos.toLocaleString()}</p>
+<p><b>Total Egresos:</b> $ ${totalEgresos.toLocaleString()}</p>
+<p><b>Saldo Final:</b> $ ${saldo.toLocaleString()}</p>
+</div>
+
+</div>
+`;
+
+}
+
+// Fechas por defecto
+
+const hoy = new Date().toISOString().split('T')[0];
+document.getElementById('desde').value = hoy;
+document.getElementById('hasta').value = hoy;
+
+</script>
+
+<style>
+
+.nav {
+display: flex;
+gap: 20px;
+margin-bottom: 20px;
+}
+
+.form-row {
+display: flex;
+gap: 10px;
+align-items: center;
+}
+
+.input {
+padding: 6px;
+}
+
+.btn {
+padding: 6px 12px;
+cursor: pointer;
+}
+
+.table {
+width: 100%;
+border-collapse: collapse;
+}
+
+.table th, .table td {
+border: 1px solid #ccc;
+padding: 6px;
+}
+
+.right {
+text-align: right;
+}
+
+/* impresión */
+
+@media print {
+
+nav, button {
+display: none;
+}
+
+.print-area {
+font-family: Arial, sans-serif;
+}
+
+}
+
+</style>
+
+<script>
+
+const rol = localStorage.getItem("rol");
+
+// 🔒 Si no está logueado → login
+if (!rol) {
+window.location.href = "login.html";
+}
+
+// 🔒 Solo puede entrar gerencia o admin
+if (rol !== "admin" && rol !== "gerencia") {
+window.location.href = "index.html";
+}
+
+// 🚪 LOGOUT
+function logout(){
+localStorage.removeItem("rol");
+window.location.href = "login.html";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ingreso de mercadería - Farmacia</title>
+
+<style>
+
+:root{
+--bg:#f6f7fb;
+--card:#fff;
+--accent:#0ea5a1;
+}
+
+*{box-sizing:border-box;}
+
+body{
+font-family:Inter,system-ui,Arial;
+margin:0;
+background:var(--bg);
+}
+
+.nav{
+display:flex;
+gap:20px;
+padding:12px 20px;
+background:white;
+box-shadow:0 1px 3px rgba(0,0,0,.1);
+}
+
+.nav a{
+text-decoration:none;
+color:black;
+}
+
+.nav details summary{
+cursor:pointer;
+font-weight:bold;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:8px;
+margin-bottom:20px;
+}
+
+input,textarea{
+width:100%;
+padding:8px;
+margin-bottom:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+.btn{
+padding:8px 14px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+background:var(--accent);
+color:white;
+}
+
+.btn.delete{
+background:#dc2626;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:8px;
+font-size:14px;
+}
+
+th{
+background:#eee;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+
+<a href="index.html">Inicio</a>
+
+<details>
+<summary>Ventas</summary>
+<a href="ingreso.html">Ingreso de ventas</a>
+<a href="envios.html">Envíos</a>
+</details>
+
+<details id="menu-admin">
+<summary>Administración</summary>
+<a href="cambioEstados.html">Cambio de estados</a>
+<a href="ticketsAbiertos.html">Tickets abiertos</a>
+<a href="pagosPendientes.html">Pagos pendientes</a>
+<a href="ingresoMercaderia.html">Ingreso de mercadería</a>
+</details>
+
+<button onclick="logout()" class="btn">Salir</button>
+
+</nav>
+
+<div class="container">
+
+<div class="card">
+
+<h3>Ingreso de mercadería</h3>
+
+<form id="formMercaderia">
+
+<label>Fecha</label>
+<input type="date" id="fecha" required>
+
+<label>Producto</label>
+<input type="text" id="producto" required>
+
+<label>Cantidad</label>
+<input type="number" id="cantidad" min="1" required>
+
+<label>Proveedor</label>
+<input type="text" id="proveedor">
+
+<label>Observaciones</label>
+<textarea id="observaciones"></textarea>
+
+<button class="btn" type="submit">Registrar ingreso</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h3>Historial de ingresos</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Producto</th>
+<th>Cantidad</th>
+<th>Proveedor</th>
+<th>Observaciones</th>
+<th>Acción</th>
+</tr>
+</thead>
+
+<tbody id="tablaMercaderia"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+let rol = localStorage.getItem("rol");
+
+if(!rol){
+window.location.href="login.html";
+}
+
+rol = rol.toLowerCase();
+
+if(rol === "ventas"){
+alert("No tiene permisos para acceder");
+window.location.href="index.html";
+}
+
+function logout(){
+localStorage.removeItem("rol");
+window.location.href="login.html";
+}
+
+let ingresos = JSON.parse(localStorage.getItem("ingresosMercaderia")) || [];
+
+const tabla = document.getElementById("tablaMercaderia");
+
+function cargarTabla(){
+
+tabla.innerHTML="";
+
+ingresos.forEach((m,i)=>{
+
+tabla.innerHTML += `
+<tr>
+<td>${m.fecha}</td>
+<td>${m.producto}</td>
+<td>${m.cantidad}</td>
+<td>${m.proveedor || "-"}</td>
+<td>${m.observaciones || "-"}</td>
+<td>
+<button class="btn delete" onclick="eliminar(${i})">Eliminar</button>
+</td>
+</tr>
+`;
+
+});
+
+}
+
+document.getElementById("formMercaderia").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const nuevoIngreso = {
+
+fecha: document.getElementById("fecha").value,
+producto: document.getElementById("producto").value,
+cantidad: document.getElementById("cantidad").value,
+proveedor: document.getElementById("proveedor").value,
+observaciones: document.getElementById("observaciones").value
+
+};
+
+ingresos.push(nuevoIngreso);
+
+localStorage.setItem("ingresosMercaderia", JSON.stringify(ingresos));
+
+this.reset();
+
+cargarTabla();
+
+});
+
+function eliminar(i){
+
+if(confirm("Eliminar registro?")){
+
+ingresos.splice(i,1);
+
+localStorage.setItem("ingresosMercaderia", JSON.stringify(ingresos));
+
+cargarTabla();
+
+}
+
+}
+
+const hoy = new Date().toISOString().split("T")[0];
+document.getElementById("fecha").value = hoy;
+
+cargarTabla();
+
+</script>
+
+</body>
+</html>
